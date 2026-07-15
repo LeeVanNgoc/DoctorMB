@@ -10,24 +10,24 @@ export class User {
   @Prop({
     required: true,
   })
-  fullName: string | undefined;
+  fullName: string;
 
   @Prop({
     required: true,
     unique: true,
   })
-  email: string | undefined;
+  email: string;
 
   @Prop({
     required: true,
   })
-  password: string | undefined;
+  password: string;
 
   @Prop({
     enum: ['patient', 'doctor', 'admin'],
     default: 'patient',
   })
-  role: string | undefined;
+  role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

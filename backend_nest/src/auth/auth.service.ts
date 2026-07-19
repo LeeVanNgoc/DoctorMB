@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Injectable,
   ConflictException,
@@ -62,5 +63,14 @@ export class AuthService {
     const jwtToken = await this.jwtService.signAsync(payload);
 
     return { accessToken: jwtToken };
+  }
+
+  async profile(user: { userId: string; email: string; role: string }) {
+    const existingUser = await this.usersService.findById(user.userId);
+
+    if (!existingUser) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+    return existingUser;
   }
 }

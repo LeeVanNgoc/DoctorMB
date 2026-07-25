@@ -11,6 +11,10 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors({
+    origin: process.env.FRONTEND_PORT,
+    credentials: true,
+  });
 
   app.setGlobalPrefix('api');
 

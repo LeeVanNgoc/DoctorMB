@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {
   ConflictException,
   Injectable,
@@ -99,11 +98,8 @@ export class PatientService {
     };
   }
 
-  async findOne(id: string): Promise<Patient> {
-    const patient = await this.patientModel.findOne({
-      _id: id,
-      isActive: true,
-    });
+  async findOne(id: string): Promise<PatientDocument> {
+    const patient = await this.patientModel.findById(id);
 
     if (!patient) {
       throw new NotFoundException('Patient not found');
@@ -158,11 +154,15 @@ export class PatientService {
     return patient;
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: string): Promise<PatientDocument> {
     const patient = await this.findOne(id);
+
+    if (!patient.isActive) {
+      throw new BadRequestException('Patient has already been deleted.');
+    }
 
     patient.isActive = false;
 
-    await patient.save();
+    return await patient.save();
   }
 }

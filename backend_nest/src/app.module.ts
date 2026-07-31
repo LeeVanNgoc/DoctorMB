@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
 // import { RolesGuard } from './common/guards/roles.guard';
 import { DoctorsModule } from './doctors/doctors.module';
 import { PatientModule } from './patient/patient.module';
+import { MedicinesModule } from './medicines/medicines.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { PatientModule } from './patient/patient.module';
     UsersModule,
     DoctorsModule,
     PatientModule,
+    MedicinesModule,
   ],
   controllers: [AppController],
   providers: [

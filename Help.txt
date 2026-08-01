@@ -1,0 +1,38 @@
+Create folder: mkdir ./.../folder_name
+Create empty file: New-Item src/auth/auth.controller.ts -ItemType File
+
+Git : 
+- git status : Check trạng thái
+- git log : Xem commit
+- git log --oneline : Brief of git log
+
+- git branch -l : list of branch
+- git branch -r : list of remote branch
+- git branch -a : all of branch
+- git branch "branch_name" : Create a branch
+- git checkout : Switch branch
+- git switch : Switch branch
+- git switch -c "branch_name" : Create and switch branch
+- git branch -m "branch_name" : Rename branch
+- git branch -d "branch_name" : Delete local branch
+- git branch -D "branch_name" : Delete force branch
+- git push origin --delete "branch_name" : Delete remote branch
+
+- git add file_name : Add one file
+- git add . : Add all file
+- git commit -m "" : Commit change
+
+- git push -u origin branch_name : First time push commit
+- git push origin branch_name : Push commit
+- git pull
+- git pull origin branch_name
+
+- git fetch : Download data but not merge
+- git merge "branch_name"
+
+- git rebase "branch_name"
+
+shadcn/ui
+- npx shadcn@latest init : Install system (configuration, utilities, theme,...)
+
+- npx shadcn@latest add "component_name" + "component_name" +... : Install component

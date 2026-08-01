@@ -1,0 +1,25 @@
+DTO: Data transfer Object: Định nghĩa cấu trúc dữ liệu đầu vào và validate dữ liệu đó.
+- No business login
+- No call database
+- No create JWT
+- No compare password
+=> Just Validate DI
+
+ConflictExeption: 409 Conflict errror => Đây là exception phù hợp nhất vì client đang cố tạo một tài nguyên mới nhưng email đã tồn tại.
+
+Injectable: đánh dấu một class là provider để NestJS có thể quản lý và Dependency Injection (DI) cho class đó.
+Controller: đánh dấu một class là Controller, tức là nơi nhận các HTTP request từ client và trả về response.
+
+Exception: Ngoại lệ 
+instance : ví dụ, lời yêu cầu, khẩn cầu
+required : yêu cầu
+category : loại, 
+
+
+The technologies use 
+- Next.js 
+- Tailwind CSS 
+- shadcn/ui 
+- Lucide React (icons)
+- React Hook Form 
+- Axios 

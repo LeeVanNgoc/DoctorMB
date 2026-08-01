@@ -11,7 +11,7 @@ import { Prescription } from './schemas/prescription.schema';
 import { UpdatePrescriptionDto } from './dto/update-prescription.dto';
 
 import { Appointment } from '../appointments/schemas/appointment.schema';
-import { Doctor } from '../doctors/schemas/doctor.shema';
+import { Doctor } from '../doctors/schemas/doctor.schema';
 import { Patient } from '../patient/schemas/patient.schema';
 @Injectable()
 export class PrescriptionsService {

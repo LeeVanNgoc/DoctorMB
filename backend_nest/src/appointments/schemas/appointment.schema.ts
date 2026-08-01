@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Doctor } from '../../doctors/schemas/doctor.shema';
+import { Doctor } from '../../doctors/schemas/doctor.schema';
 import { Patient } from '../../patient/schemas/patient.schema';
 import { AppointmentStatus } from '../enums/appointment-status.enum';
 

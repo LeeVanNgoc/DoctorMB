@@ -11,7 +11,7 @@ import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 
 import { Appointment, AppointmentDocument } from './schemas/appointment.schema';
-import { Doctor, DoctorDocument } from '../doctors/schemas/doctor.shema';
+import { Doctor, DoctorDocument } from '../doctors/schemas/doctor.schema';
 import { Patient, PatientDocument } from '../patient/schemas/patient.schema';
 
 @Injectable()

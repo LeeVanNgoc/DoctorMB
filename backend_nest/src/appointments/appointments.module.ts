@@ -6,7 +6,7 @@ import { AppointmentsService } from './appointments.service';
 
 import { Appointment, AppointmentSchema } from './schemas/appointment.schema';
 
-import { Doctor, DoctorSchema } from '../doctors/schemas/doctor.shema';
+import { Doctor, DoctorSchema } from '../doctors/schemas/doctor.schema';
 import { Patient, PatientSchema } from '../patient/schemas/patient.schema';
 
 @Module({

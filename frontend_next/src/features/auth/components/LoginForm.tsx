@@ -2,15 +2,15 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginFormData } from "@/schemas/auth.schema";
-import { useAuth } from "@/hooks/use-auth";
+import { loginSchema, type LoginFormData } from "@/features/auth/schemas/auth.schema";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { authService } from "@/services/auth.service";
+import { Button } from "@/shared/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/shared/components/ui/card";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
+import { authService } from "@/features/auth/services/auth.service";
 export function LoginForm() {
   const {
     register, handleSubmit, formState: {errors},

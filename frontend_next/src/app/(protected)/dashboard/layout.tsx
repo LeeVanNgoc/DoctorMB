@@ -2,9 +2,9 @@
 
 import { ReactNode, useState } from "react";
 
-import { ProtectedRoute } from "@/components/auth/protected-route";
-import { NavBar } from "@/components/layout/navbar";
-import { Sidebar } from "@/components/layout/sidebar";
+import { ProtectedRoute } from "@/features/auth/components/protected-route";
+import { NavBar } from "@/shared/components/layout/navbar";
+import { Sidebar } from "@/shared/components/layout/sidebar";
 
 interface DashboardLayoutProps {
   children: ReactNode;

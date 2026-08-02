@@ -1,8 +1,8 @@
-import { DashboardChart } from "@/components/dashboard/dashboard-chart";
-import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { RecentActivities } from "@/components/dashboard/recent-activities";
-import { RecentAppointments } from "@/components/dashboard/recent-appointments";
-import { StatsGrid } from "@/components/dashboard/stats-grid";
+import { DashboardChart } from "@/features/dashboard/components/dashboard-chart";
+import { DashboardHeader } from "@/features/dashboard/components/dashboard-header";
+import { RecentActivities } from "@/features/dashboard/components/recent-activities";
+import { RecentAppointments } from "@/features/dashboard/components/recent-appointments";
+import { StatsGrid } from "@/features/dashboard/components/stats-grid";
 
 export default function DashboardPage() {
   return (

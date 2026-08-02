@@ -1,6 +1,6 @@
 "use client"
-import { LoginForm } from "@/components/auth/LoginForm";
-import { useAuth } from "@/hooks/use-auth";
+import { LoginForm } from "@/features/auth/components/LoginForm";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 
 export default function HomePage() {
   const { user, isAuthenticated, logout } = useAuth();

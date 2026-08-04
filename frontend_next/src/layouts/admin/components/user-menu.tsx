@@ -1,0 +1,66 @@
+"use client";
+
+import {
+  ChevronDown,
+  LogOut,
+  Settings,
+  User,
+  UserCircle2,
+} from "lucide-react";
+
+import { Button } from "@/shared/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/shared/components/ui/dropdown-menu";
+
+export function UserMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button
+          type="button"
+          variant="ghost"
+          className="flex h-10 items-center gap-2 px-2"
+        >
+          <UserCircle2 className="size-8" />
+
+          <div className="hidden text-left md:block">
+            <p className="text-sm font-medium">Administrator</p>
+
+            <p className="text-xs text-muted-foreground">
+              admin@doctorm.com
+            </p>
+          </div>
+
+          <ChevronDown className="size-4 text-muted-foreground" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent
+        align="end"
+        className="w-56"
+      >
+        <DropdownMenuItem>
+          <User className="mr-2 size-4" />
+          Profile
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Settings className="mr-2 size-4" />
+          Settings
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="text-destructive focus:text-destructive">
+          <LogOut className="mr-2 size-4" />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

@@ -1,4 +1,4 @@
-import { PEOPLE_NAVIGATION } from "@/features/people/constants/people-navigation";
+import { PEOPLE_NAVIGATION } from "@/features/people/dashboard/constants/people-navigation";
 import { MEDICINES_NAVIGATION } from "@/features/medicines/medicines-navigation";
 import { REPORTS_NAVIGATION } from "@/features/reports/reports-navigation";
 

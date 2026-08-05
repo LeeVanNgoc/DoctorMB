@@ -1,13 +1,21 @@
+import { UserTable } from "@/features/people/users/components/user-table";
+import { UserTableToolbar } from "@/features/people/users/components/user-table-toolbar";
+
 export default function UsersPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">
-        Users Management
-      </h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">
+          User Management
+        </h1>
 
-      <p className="mt-2 text-muted-foreground">
-        Manage system users.
-      </p>
+        <p className="text-muted-foreground">
+          Manage all system users.
+        </p>
+      </div>
+      <UserTableToolbar />
+
+      <UserTable />
     </div>
   );
 }

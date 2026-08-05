@@ -1,6 +1,6 @@
-import { PeopleStatCard } from "@/features/people/components/people-stat-card";
-import { RecentActivity } from "@/features/people/components/recent-activity";
-import { PEOPLE_STATISTICS } from "@/features/people/constants/people-dashboard";
+import { PeopleStatCard } from "@/features/people/dashboard/components/people-stat-card";
+import { RecentActivity } from "@/features/people/dashboard/components/recent-activity";
+import { PEOPLE_STATISTICS } from "@/features/people/dashboard/constants/people-dashboard";
 
 export default function PeopleDashboardPage() {
   return (

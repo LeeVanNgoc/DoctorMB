@@ -1,23 +1,21 @@
 "use client";
 import { useState } from "react";
 
-import { Plus, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
 import { CreateUserDialog } from "../dialogs/create-user-dialog";
+import { FilterSelect } from "@/shared/components/common/filter-select";
+import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from "../constants/user-filters";
 
 export function UserTableToolbar() {
   const [openCreateDialog, setOpenCreateDialog] =
     useState(false);
+  
+  const [status, setStatus] = useState("all");
+  const [role, setRole] = useState("all");
   
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -29,53 +27,17 @@ export function UserTableToolbar() {
             className="pl-9"
           />
         </div>
-        <Select>
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder="Role" />
-            </SelectTrigger>
+        <FilterSelect
+          value={role}
+          options={USER_ROLE_OPTIONS}
+          onValueChange={setRole}
+        />
 
-            <SelectContent>
-              <SelectItem value="all">
-                All Roles
-              </SelectItem>
-
-              <SelectItem value="admin">
-                Admin
-              </SelectItem>
-
-              <SelectItem value="doctor">
-                Doctor
-              </SelectItem>
-
-              <SelectItem value="patient">
-                Patient
-              </SelectItem>
-
-              <SelectItem value="receptionist">
-                Receptionist
-              </SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select>
-            <SelectTrigger className="w-40">
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="all">
-                All Status
-              </SelectItem>
-
-              <SelectItem value="active">
-                Active
-              </SelectItem>
-
-              <SelectItem value="inactive">
-                Inactive
-              </SelectItem>
-            </SelectContent>
-          </Select>
+        <FilterSelect
+          value={status}
+          options={USER_STATUS_OPTIONS}
+          onValueChange={setStatus}
+        />
       </div>
 
       <Button onClick={() => setOpenCreateDialog(true)}>

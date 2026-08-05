@@ -1,25 +1,39 @@
 import { User } from "../types/user";
 
-export const MOCK_USERS: User[] = [
+export const USER_ROLE_OPTIONS = [
   {
-    id: "1",
-    fullName: "John Doe",
-    email: "john@example.com",
-    role: "admin",
-    status: "active",
+    value: "all",
+    label: "All Roles",
   },
   {
-    id: "2",
-    fullName: "Jane Smith",
-    email: "jane@example.com",
-    role: "doctor",
-    status: "active",
+    value: "admin",
+    label: "Admin",
   },
   {
-    id: "3",
-    fullName: "David Brown",
-    email: "david@example.com",
-    role: "patient",
-    status: "inactive",
+    value: "doctor",
+    label: "Doctor",
+  },
+  {
+    value: "patient",
+    label: "Patient",
+  },
+  {
+    value: "receptionist",
+    label: "Receptionist",
+  },
+];
+
+export const USER_STATUS_OPTIONS = [
+  {
+    value: "all",
+    label: "All Status",
+  },
+  {
+    value: "active",
+    label: "Active",
+  },
+  {
+    value: "inactive",
+    label: "Inactive",
   },
 ];

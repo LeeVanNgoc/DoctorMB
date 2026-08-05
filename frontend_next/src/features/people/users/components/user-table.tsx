@@ -7,11 +7,11 @@ import {
   TableRow,
 } from "@/shared/components/ui/table";
 
-import { MOCK_USERS } from "../constants/user-filters";
+import { MOCK_USERS } from "../constants/mock-users";
 import { UserStatusBadge } from "./user-status-badge";
 import { UserRowActions } from "./user-row-actions";
-import { UserPagination } from "./user-pagination";
 import { EmptyState } from "@/shared/components/common/empty-state";
+import { DataPagination } from "@/shared/components/common/data-pagination";
 
 export function UserTable() {
   return (
@@ -66,7 +66,12 @@ export function UserTable() {
           )}
         </TableBody>
       </Table>
-      <UserPagination />
+      <DataPagination
+        currentPage={1}
+        pageSize={10}
+        totalItems={MOCK_USERS.length}
+        resourceName="users"
+      />
     </div>
   );
 }

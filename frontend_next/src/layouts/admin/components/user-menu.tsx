@@ -20,24 +20,18 @@ import {
 export function UserMenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          type="button"
-          variant="ghost"
-          className="flex h-10 items-center gap-2 px-2"
-        >
-          <UserCircle2 className="size-8" />
+      <DropdownMenuTrigger className="flex h-10 items-center gap-2 rounded-md px-2 hover:bg-accent">
+        <UserCircle2 className="size-8" />
 
-          <div className="hidden text-left md:block">
-            <p className="text-sm font-medium">Administrator</p>
+        <div className="hidden text-left md:block">
+          <p className="text-sm font-medium">Administrator</p>
 
-            <p className="text-xs text-muted-foreground">
-              admin@doctorm.com
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            admin@doctorm.com
+          </p>
+        </div>
 
-          <ChevronDown className="size-4 text-muted-foreground" />
-        </Button>
+        <ChevronDown className="size-4 text-muted-foreground" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent

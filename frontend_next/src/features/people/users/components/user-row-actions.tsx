@@ -39,13 +39,10 @@ export function UserRowActions({
   return (
     <>
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Button
-          variant="ghost"
-          size="icon"
-        >
-          <MoreHorizontal className="size-4" />
-        </Button>
+      <DropdownMenuTrigger
+        className="flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent"
+      >
+        <MoreHorizontal className="size-4" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">

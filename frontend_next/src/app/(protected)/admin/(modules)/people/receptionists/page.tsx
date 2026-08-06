@@ -1,13 +1,33 @@
+import {
+  MOCK_RECEPTIONISTS,
+} from "@/features/people/receptionists/constants/mock-receptionist";
+
+import {
+  ReceptionistToolbar,
+} from "@/features/people/receptionists/components/receptionist-toolbar";
+
+import {
+  ReceptionistTable,
+} from "@/features/people/receptionists/components/receptionist-table";
+
 export default function ReceptionistsPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">
-        Receptionists Management
-      </h1>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight">
+          Receptionists
+        </h1>
 
-      <p className="mt-2 text-muted-foreground">
-        Manage receptionists.
-      </p>
+        <p className="text-muted-foreground">
+          Manage receptionist accounts and information.
+        </p>
+      </div>
+
+      <ReceptionistToolbar />
+
+      <ReceptionistTable
+        data={MOCK_RECEPTIONISTS}
+      />
     </div>
   );
 }

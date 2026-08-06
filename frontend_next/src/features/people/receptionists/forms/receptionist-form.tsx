@@ -1,37 +1,33 @@
 "use client";
-
 import { useState } from "react";
-
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 
 import { FormSelect } from "@/shared/components/common/form-select";
 
 import {
-  DOCTOR_STATUS,
-} from "../constants/doctor-filters";
+  RECEPTIONIST_STATUS_OPTIONS,
+} from "../constants/receptionist-filters";
 
 import {
-  Doctor,
-  DoctorFormMode,
-  DoctorStatus,
-} from "../types";
+  Receptionist,
+  ReceptionistStatus,
+} from "../types/receptionist";
 
-interface DoctorFormProps {
-  mode: DoctorFormMode;
-  doctor?: Doctor;
+interface ReceptionistFormProps {
+  mode: "create" | "edit" | "view";
+  receptionist?: Receptionist;
 }
 
-export function DoctorForm({
+export function ReceptionistForm({
   mode,
-  doctor,
-}: DoctorFormProps) {
+  receptionist,
+}: ReceptionistFormProps) {
   const readOnly = mode === "view";
 
-  const [status, setStatus] =
-    useState<DoctorStatus>(
-      doctor?.status ?? "active"
-    );
+  const [status, setStatus] = useState(
+    receptionist?.status ?? "active"
+  );
 
   return (
     <div className="grid gap-5 py-4">
@@ -42,7 +38,7 @@ export function DoctorForm({
 
         <Input
           id="fullName"
-          defaultValue={doctor?.fullName}
+          defaultValue={receptionist?.fullName}
           placeholder="Enter full name"
           disabled={readOnly}
         />
@@ -56,7 +52,7 @@ export function DoctorForm({
         <Input
           id="email"
           type="email"
-          defaultValue={doctor?.email}
+          defaultValue={receptionist?.email}
           placeholder="Enter email"
           disabled={readOnly}
         />
@@ -83,56 +79,25 @@ export function DoctorForm({
 
         <Input
           id="phone"
-          defaultValue={doctor?.phone}
+          defaultValue={receptionist?.phone}
           placeholder="Enter phone number"
           disabled={readOnly}
         />
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="specialty">
-          Specialty
+        <Label htmlFor="employeeCode">
+          Employee Code
         </Label>
 
         <Input
-          id="specialty"
-          defaultValue={doctor?.specialty}
-          placeholder="Enter specialty"
+          id="employeeCode"
+          defaultValue={
+            receptionist?.employeeCode
+          }
+          placeholder="Enter employee code"
           disabled={readOnly}
         />
-      </div>
-
-      <div className="grid grid-cols-2 gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="licenseNumber">
-            License Number
-          </Label>
-
-          <Input
-            id="licenseNumber"
-            defaultValue={
-              doctor?.licenseNumber
-            }
-            placeholder="Enter license number"
-            disabled={readOnly}
-          />
-        </div>
-
-        <div className="grid gap-2">
-          <Label htmlFor="yearsOfExperience">
-            Years of Experience
-          </Label>
-
-          <Input
-            id="yearsOfExperience"
-            type="number"
-            defaultValue={
-              doctor?.yearsOfExperience
-            }
-            placeholder="Years"
-            disabled={readOnly}
-          />
-        </div>
       </div>
 
       <div className="grid gap-2">
@@ -143,16 +108,13 @@ export function DoctorForm({
         <FormSelect
           value={status}
           placeholder="Select status"
-          options={
-            DOCTOR_STATUS.filter(
-              (option) =>
-                option.value !== "all"
-            )
-          }
+          options={RECEPTIONIST_STATUS_OPTIONS.filter(
+            (option) => option.value !== "all"
+          )}
           disabled={readOnly}
           onValueChange={(value) =>
             setStatus(
-              (value ?? "active") as DoctorStatus
+              (value ?? "active") as ReceptionistStatus
             )
           }
         />

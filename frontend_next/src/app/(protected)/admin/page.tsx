@@ -1,5 +1,5 @@
-import { ModuleCard } from "@/features/admin/components/module-card";
 import { ADMIN_MODULES } from "@/features/admin/constants/admin-modules";
+import { ModuleCard } from "@/shared/components/common/module-card";
 
 export default function AdminPortalPage() {
   return (

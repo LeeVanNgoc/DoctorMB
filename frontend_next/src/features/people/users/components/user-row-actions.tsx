@@ -8,7 +8,6 @@ import {
   Trash2,
 } from "lucide-react";
 
-import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,10 +39,23 @@ export function UserRowActions({
     <>
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="flex h-9 w-9 items-center justify-center rounded-md hover:bg-accent"
-      >
-        <MoreHorizontal className="size-4" />
-      </DropdownMenuTrigger>
+          className="
+            inline-flex
+            h-9
+            w-9
+            items-center
+            justify-center
+            rounded-md
+            transition-colors
+            hover:bg-accent
+            hover:text-accent-foreground
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-ring
+          "
+        >
+          <MoreHorizontal className="size-4" />
+        </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
         <DropdownMenuItem

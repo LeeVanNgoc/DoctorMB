@@ -1,13 +1,23 @@
+"use client";
+
+import { useState } from "react";
+
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
+
+import { FormSelect } from "@/shared/components/common/form-select";
+
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
-import { User, UserFormMode } from "../types";
+  USER_ROLE,
+  USER_STATUS,
+} from "../constants/user-filters";
+
+import {
+  User,
+  UserFormMode,
+  UserRole,
+  UserStatus,
+} from "../types";
 
 interface UserFormProps {
   mode: UserFormMode;
@@ -19,6 +29,16 @@ export function UserForm({
   user,
 }: UserFormProps) {
   const readOnly = mode === "view";
+
+  const [role, setRole] =
+    useState<UserRole>(
+      user?.role ?? "patient"
+    );
+
+  const [status, setStatus] =
+    useState<UserStatus>(
+      user?.status ?? "active"
+    );
 
   return (
     <div className="grid gap-5 py-4">
@@ -69,32 +89,22 @@ export function UserForm({
             Role
           </Label>
 
-          <Select
-            defaultValue={user?.role}
+          <FormSelect
+            value={role}
+            placeholder="Select role"
+            options={
+              USER_ROLE.filter(
+                (option) =>
+                  option.value !== "all"
+              )
+            }
             disabled={readOnly}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select role" />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="admin">
-                Admin
-              </SelectItem>
-
-              <SelectItem value="doctor">
-                Doctor
-              </SelectItem>
-
-              <SelectItem value="patient">
-                Patient
-              </SelectItem>
-
-              <SelectItem value="receptionist">
-                Receptionist
-              </SelectItem>
-            </SelectContent>
-          </Select>
+            onValueChange={(value) =>
+              setRole(
+                (value ?? "patient") as UserRole
+              )
+            }
+          />
         </div>
 
         <div className="grid gap-2">
@@ -102,24 +112,22 @@ export function UserForm({
             Status
           </Label>
 
-          <Select
-            defaultValue={user?.status}
+          <FormSelect
+            value={status}
+            placeholder="Select status"
+            options={
+              USER_STATUS.filter(
+                (option) =>
+                  option.value !== "all"
+              )
+            }
             disabled={readOnly}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select status" />
-            </SelectTrigger>
-
-            <SelectContent>
-              <SelectItem value="active">
-                Active
-              </SelectItem>
-
-              <SelectItem value="inactive">
-                Inactive
-              </SelectItem>
-            </SelectContent>
-          </Select>
+            onValueChange={(value) =>
+              setStatus(
+                (value ?? "active") as UserStatus
+              )
+            }
+          />
         </div>
       </div>
     </div>

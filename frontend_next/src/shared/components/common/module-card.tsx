@@ -9,12 +9,11 @@ import {
 } from "@/shared/components/ui/card";
 import { cn } from "@/shared/lib/utils";
 
-import { AdminModule } from "../types/admin-module";
+import { PortalModule } from "@/shared/types/portal-module";
 
 interface ModuleCardProps {
-  module: AdminModule;
+  module: PortalModule;
 }
-
 export function ModuleCard({ module }: ModuleCardProps) {
   const Icon = module.icon;
 
@@ -37,7 +36,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
         <CardDescription>
           {module.enabled
             ? module.description
-            : "Coming Soon"}
+            : module.coming}
         </CardDescription>
       </CardHeader>
 
@@ -50,7 +49,7 @@ export function ModuleCard({ module }: ModuleCardProps) {
               : "text-muted-foreground"
           )}
         >
-          {module.enabled ? "Open →" : "Coming Soon"}
+          {module.enabled ? "Open →" : module.coming}
         </span>
       </CardFooter>
     </Card>

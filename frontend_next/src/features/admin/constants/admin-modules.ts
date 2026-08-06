@@ -1,8 +1,8 @@
+import { PortalModule } from "@/shared/types/portal-module";
 import { ChartColumn, Pill, Users } from "lucide-react";
 
-import { AdminModule } from "../types/admin-module";
 
-export const ADMIN_MODULES: AdminModule[] = [
+export const ADMIN_MODULES: PortalModule[] = [
   {
     title: "People",
     description: "Manage users, doctors, patients and receptionists.",

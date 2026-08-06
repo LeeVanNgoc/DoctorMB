@@ -1,6 +1,6 @@
 import { LucideIcon } from "lucide-react";
 
-export interface AdminModule {
+export interface PortalModule {
   title: string;
   description: string;
   href: string;

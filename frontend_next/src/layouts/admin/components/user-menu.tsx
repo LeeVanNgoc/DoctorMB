@@ -8,7 +8,6 @@ import {
   UserCircle2,
 } from "lucide-react";
 
-import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +17,11 @@ import {
 } from "@/shared/components/ui/dropdown-menu";
 
 export function UserMenu() {
+  function handleLogout() {
+    localStorage.removeItem("access_token");
+
+    window.location.href = "/login";
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex h-10 items-center gap-2 rounded-md px-2 hover:bg-accent">
@@ -50,8 +54,12 @@ export function UserMenu() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="text-destructive focus:text-destructive">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="text-destructive focus:text-destructive"
+        >
           <LogOut className="mr-2 size-4" />
+
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>

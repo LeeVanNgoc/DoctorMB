@@ -1,7 +1,9 @@
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+
 import { Type } from 'class-transformer';
 
 import { Role } from '../../common/enums/role.enum';
+import { UserStatus } from '../../common/enums/user-status.enum';
 
 export class QueryUserDto {
   @IsOptional()
@@ -24,4 +26,8 @@ export class QueryUserDto {
   @IsOptional()
   @IsEnum(Role)
   role?: Role;
+
+  @IsOptional()
+  @IsEnum(UserStatus)
+  status?: UserStatus;
 }

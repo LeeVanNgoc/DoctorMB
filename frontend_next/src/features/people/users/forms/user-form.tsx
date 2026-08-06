@@ -18,27 +18,32 @@ import {
   UserRole,
   UserStatus,
 } from "../types";
+import { UserStatusBadge } from "../components/user-status-badge";
+
+export interface UserFormValues {
+  fullName: string;
+  email: string;
+  password?: string;
+  role: UserRole;
+  status: UserStatus;
+}
 
 interface UserFormProps {
   mode: UserFormMode;
-  user?: User;
+  values: UserFormValues;
+
+  onChange: (
+    field: keyof UserFormValues,
+    value: string
+  ) => void;
 }
 
 export function UserForm({
   mode,
-  user,
+  values,
+  onChange
 }: UserFormProps) {
   const readOnly = mode === "view";
-
-  const [role, setRole] =
-    useState<UserRole>(
-      user?.role ?? "patient"
-    );
-
-  const [status, setStatus] =
-    useState<UserStatus>(
-      user?.status ?? "active"
-    );
 
   return (
     <div className="grid gap-5 py-4">
@@ -49,9 +54,15 @@ export function UserForm({
 
         <Input
           id="fullName"
-          defaultValue={user?.fullName}
+          value={values.fullName}
           placeholder="Enter full name"
           disabled={readOnly}
+          onChange={(e)=>
+            onChange(
+              "fullName",
+              e.target.value
+            )
+          }
         />
       </div>
 
@@ -63,9 +74,15 @@ export function UserForm({
         <Input
           id="email"
           type="email"
-          defaultValue={user?.email}
+          value={values.email}
           placeholder="Enter email"
           disabled={readOnly}
+          onChange={(e)=>
+            onChange(
+              "email",
+              e.target.value
+            )
+          }
         />
       </div>
 
@@ -78,56 +95,71 @@ export function UserForm({
           <Input
             id="password"
             type="password"
+            value={values.password ?? ""}
             placeholder="Enter password"
+            onChange={(e)=>
+              onChange(
+                "password",
+                e.target.value
+              )
+            }
           />
         </div>
       )}
 
+      
       <div className="grid grid-cols-2 gap-4">
         <div className="grid gap-2">
           <Label>
             Role
           </Label>
-
-          <FormSelect
-            value={role}
-            placeholder="Select role"
-            options={
-              USER_ROLE.filter(
-                (option) =>
-                  option.value !== "all"
-              )
-            }
-            disabled={readOnly}
-            onValueChange={(value) =>
-              setRole(
-                (value ?? "patient") as UserRole
-              )
-            }
-          />
+          {mode === "view" ? (
+            <p className="text-sm uppercase">
+              {values.role}
+            </p>
+          ) : (
+            <FormSelect
+              value={values.role}
+              placeholder="Select role"
+              options={
+                USER_ROLE.filter(
+                  (option) =>
+                    option.value !== "all"
+                )
+              }
+              disabled={readOnly}
+              onValueChange={(value)=>
+                onChange(
+                  "role",
+                  value ?? "patient"
+                )
+              }
+                />
+          )}
         </div>
 
         <div className="grid gap-2">
           <Label>
             Status
           </Label>
-
-          <FormSelect
-            value={status}
-            placeholder="Select status"
-            options={
-              USER_STATUS.filter(
-                (option) =>
+          {mode === "view" ? (
+            <UserStatusBadge status={values.status} />
+          ) : (
+            <FormSelect
+              value={values.status}
+              placeholder="Select status"
+              options={USER_STATUS.filter(
+                option =>
                   option.value !== "all"
-              )
-            }
-            disabled={readOnly}
-            onValueChange={(value) =>
-              setStatus(
-                (value ?? "active") as UserStatus
-              )
-            }
-          />
+              )}
+              onValueChange={(value) =>
+                onChange(
+                  "status",
+                  value ?? "active"
+                )
+              }
+            />
+          )}
         </div>
       </div>
     </div>

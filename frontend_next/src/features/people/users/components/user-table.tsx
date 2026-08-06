@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,13 +10,76 @@ import {
   TableRow,
 } from "@/shared/components/ui/table";
 
-import { MOCK_USERS } from "../constants/mock-users";
 import { UserStatusBadge } from "./user-status-badge";
 import { UserRowActions } from "./user-row-actions";
 import { EmptyState } from "@/shared/components/common/empty-state";
 import { DataPagination } from "@/shared/components/common/data-pagination";
+import { useUsers } from "../hooks/use-users";
+import { User } from "../types";
 
-export function UserTable() {
+interface UserTableProps {
+  page: number;
+  limit: number;
+
+  search: string;
+  role: string;
+  status: string;
+
+  onPageChange: (page: number) => void;
+
+  onPageSizeChange: (size: number) => void;
+}
+
+export function UserTable({
+  page,
+  limit,
+  search,
+  role,
+  status,
+  onPageChange,
+  onPageSizeChange,
+}: UserTableProps) {
+  
+  const {
+    data,
+    isLoading,
+    isError
+  } = useUsers({
+    page,
+    limit,
+    search,
+    role:
+      role === "all"
+        ? undefined
+        : role,
+    status:
+      status === "all"
+        ? undefined
+        : status,
+  });
+
+  const users = data?.data ?? [];
+  const pagination = data?.pagination;
+  console.log(users)
+
+
+  if (isLoading) {
+    return (
+      <div className="rounded-lg border bg-background p-6">
+        Loading users...
+      </div>
+    );
+  }
+
+
+  if (isError) {
+    return (
+      <div className="rounded-lg border bg-background p-6">
+        Failed to load users.
+      </div>
+    );
+  }
+  
   return (
     <div className="rounded-lg border bg-background">
       <Table>
@@ -34,7 +100,7 @@ export function UserTable() {
         </TableHeader>
 
         <TableBody>
-          {MOCK_USERS.length === 0 ? (
+          {users.length === 0 ? (
             <TableRow>
               <TableCell colSpan={5}>
                 <EmptyState
@@ -44,8 +110,8 @@ export function UserTable() {
               </TableCell>
             </TableRow>
           ) : (
-            MOCK_USERS.map((user) => (
-              <TableRow key={user.id}>
+            users.map((user: User) => (
+              <TableRow key={user._id}>
                 <TableCell>{user.fullName}</TableCell>
 
                 <TableCell>{user.email}</TableCell>
@@ -67,10 +133,18 @@ export function UserTable() {
         </TableBody>
       </Table>
       <DataPagination
-        currentPage={1}
-        pageSize={10}
-        totalItems={MOCK_USERS.length}
+        currentPage={
+          pagination?.page ?? page
+        }
+        pageSize={
+          pagination?.limit ?? limit
+        }
+        totalItems={
+          pagination?.total ?? 0
+        }
         resourceName="users"
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
       />
     </div>
   );

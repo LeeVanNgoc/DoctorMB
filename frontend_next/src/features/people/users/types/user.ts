@@ -4,14 +4,62 @@ export type UserRole =
   | "patient"
   | "receptionist";
 
+
 export type UserStatus =
   | "active"
   | "inactive";
-  
+
+
 export interface User {
-  id: string;
+  _id: string;
+
+  fullName: string;
+
+  email: string;
+
+  role: UserRole;
+
+  status: UserStatus;
+
+  createdAt?: string;
+
+  updatedAt?: string;
+}
+
+
+export interface CreateUserRequest {
+  fullName: string;
+
+  email: string;
+
+  password: string;
+
+  role: UserRole;
+
+  status: UserStatus;
+}
+
+
+export interface UpdateUserRequest {
+  fullName?: string;
+
+  email?: string;
+
+  role?: UserRole;
+
+  status?: UserStatus;
+}
+
+export interface UserFormValues {
   fullName: string;
   email: string;
-  role: "admin" | "doctor" | "patient" | "receptionist";
-  status: "active" | "inactive";
+  password?: string;
+  role: UserRole;
+  status: UserStatus;
 }
+
+
+export type UserFormMode =
+  | "create"
+  | "edit"
+  | "view";

@@ -5,12 +5,13 @@ import { DialogFooter } from "@/shared/components/ui/dialog";
 
 import { UserDialog } from "../components/user-dialog-layout";
 import { UserForm } from "../forms/user-form";
-import { User } from "../types";
+
+import type { User } from "../types";
 
 interface ViewUserDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-   user: User;
+  user: User;
 }
 
 export function ViewUserDialog({
@@ -18,6 +19,8 @@ export function ViewUserDialog({
   onOpenChange,
   user,
 }: ViewUserDialogProps) {
+  const handleChange = () => {};
+
   return (
     <UserDialog
       open={open}
@@ -27,7 +30,14 @@ export function ViewUserDialog({
     >
       <UserForm
         mode="view"
-        user={user}
+        values={{
+          fullName: user.fullName,
+          email: user.email,
+          password: "",
+          role: user.role,
+          status: user.status,
+        }}
+        onChange={handleChange}
       />
 
       <DialogFooter>

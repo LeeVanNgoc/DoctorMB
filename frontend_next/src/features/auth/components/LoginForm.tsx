@@ -29,21 +29,33 @@ export function LoginForm() {
     try {
       const response = await authService.login(data);
       console.log("Login Success");
-      await login(response.data.accessToken);
-      router.push("/dashboard");
+      const user = await login(
+        response.data.accessToken
+      );
+
+
+      switch (user.role) {
+        case "admin":
+          console.log("ADMIN REDIRECT");
+          router.push("/admin");
+          break;
+
+        case "doctor":
+          router.push("/doctor");
+          break;
+
+        case "patient":
+          router.push("/user");
+          break;
+
+        default:
+          router.push("/");
+      }
     } catch (error) {
       console.error(error);
     }
   }
 
-  const handleGetProfile = async () => {
-    try {
-      const response = await authService.getProfile();
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
@@ -90,10 +102,6 @@ export function LoginForm() {
 
           <Button className="w-full" type="submit">
             Login
-          </Button>
-
-          <Button className="w-full" type="button" onClick={handleGetProfile}>
-            Get Profile
           </Button>
 
           <p className="text-center text-sm text-muted-foreground">

@@ -1,12 +1,14 @@
 "use client";
 
 import { AlertTriangle } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/shared/components/ui/button";
 import { DialogFooter } from "@/shared/components/ui/dialog";
 
 import { UserDialog } from "../components/user-dialog-layout";
 import { User } from "../types";
+import { useDeleteUser } from "../hooks/use-users";
 
 interface DeleteUserDialogProps {
   open: boolean;
@@ -17,7 +19,24 @@ interface DeleteUserDialogProps {
 export function DeleteUserDialog({
   open,
   onOpenChange,
+  user,
 }: DeleteUserDialogProps) {
+  const {
+    mutateAsync: deleteUser,
+    isPending,
+  } = useDeleteUser();
+
+  const handleDelete = async () => {
+    try {
+      await deleteUser(user._id);
+      toast.success("User deleted successfully.");
+
+      onOpenChange(false);
+    } catch (error) {
+      console.error("Delete user failed:", error);
+    }
+  };
+  
   return (
     <UserDialog
       open={open}
@@ -40,6 +59,38 @@ export function DeleteUserDialog({
         </div>
       </div>
 
+      <div className="rounded-md border p-4 space-y-3">
+        <div>
+          <p className="text-xs text-muted-foreground">
+            Full Name
+          </p>
+
+          <p className="font-medium">
+            {user.fullName}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-muted-foreground">
+            Email
+          </p>
+
+          <p className="font-medium">
+            {user.email}
+          </p>
+        </div>
+
+        <div>
+          <p className="text-xs text-muted-foreground">
+            Role
+          </p>
+
+          <p className="font-medium uppercase">
+            {user.role}
+          </p>
+        </div>
+      </div>
+
       <DialogFooter>
         <Button
           variant="outline"
@@ -48,9 +99,14 @@ export function DeleteUserDialog({
           Cancel
         </Button>
 
-        <Button variant="destructive">
-          Delete User
+        <Button
+          variant="destructive"
+          onClick={handleDelete}
+          disabled={isPending}
+        >
+          {isPending ? "Deleting..." : "Delete User"}
         </Button>
+
       </DialogFooter>
     </UserDialog>
   );

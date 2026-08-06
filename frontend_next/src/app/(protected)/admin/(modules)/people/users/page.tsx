@@ -1,5 +1,5 @@
-import { UserTable } from "@/features/people/users/components/user-table";
-import { UserTableToolbar } from "@/features/people/users/components/user-table-toolbar";
+import { UsersContent } from "@/features/people/users/components/users-content";
+
 
 export default function UsersPage() {
   return (
@@ -13,9 +13,8 @@ export default function UsersPage() {
           Manage all system users.
         </p>
       </div>
-      <UserTableToolbar />
 
-      <UserTable />
+      <UsersContent />
     </div>
   );
 }

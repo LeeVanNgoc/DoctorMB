@@ -2,14 +2,23 @@
 
 import { Button } from "@/shared/components/ui/button";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+
 interface DataPaginationProps {
   currentPage: number;
   pageSize: number;
   totalItems: number;
   resourceName: string;
+  
+  onPageChange?: (page: number) => void;
 
-  onPrevious?: () => void;
-  onNext?: () => void;
+  onPageSizeChange?: (size: number) => void;
 }
 
 export function DataPagination({
@@ -17,8 +26,8 @@ export function DataPagination({
   pageSize,
   totalItems,
   resourceName,
-  onPrevious,
-  onNext,
+  onPageChange,
+  onPageSizeChange
 }: DataPaginationProps) {
   const start =
     totalItems === 0
@@ -36,17 +45,52 @@ export function DataPagination({
   );
 
   return (
-    <div className="flex items-center justify-between border-t px-6 py-4">
-      <p className="text-sm text-muted-foreground">
-        Showing {start} to {end} of {totalItems}{" "}
-        {resourceName}
-      </p>
+  <div className="flex items-center justify-between border-t px-6 py-4">
+      
+      <div className="flex items-center gap-4">
+        <p className="text-sm text-muted-foreground">
+          Showing {start} to {end} of {totalItems}{" "}
+          {resourceName}
+        </p>
+
+        <Select
+          value={String(pageSize)}
+          onValueChange={(value) =>
+            onPageSizeChange?.(Number(value))
+          }
+        >
+          <SelectTrigger className="w-20">
+            <SelectValue />
+          </SelectTrigger>
+
+          <SelectContent>
+            <SelectItem value="10">
+              10
+            </SelectItem>
+
+            <SelectItem value="20">
+              20
+            </SelectItem>
+
+            <SelectItem value="50">
+              50
+            </SelectItem>
+
+            <SelectItem value="100">
+              100
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
 
       <div className="flex items-center gap-2">
         <Button
           variant="outline"
           size="sm"
-          onClick={onPrevious}
+          onClick={() =>
+            onPageChange?.(currentPage - 1)
+          }
           disabled={currentPage === 1}
         >
           Previous
@@ -59,12 +103,15 @@ export function DataPagination({
         <Button
           variant="outline"
           size="sm"
-          onClick={onNext}
+          onClick={() =>
+            onPageChange?.(currentPage + 1)
+          }
           disabled={currentPage >= totalPages}
         >
           Next
         </Button>
       </div>
+
     </div>
   );
 }

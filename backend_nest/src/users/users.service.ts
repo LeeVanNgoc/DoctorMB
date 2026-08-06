@@ -34,7 +34,7 @@ export class UsersService {
   }
 
   async findAll(query: QueryUserDto) {
-    const { page = 1, limit = 10, search, role } = query;
+    const { page = 1, limit = 10, search, role, status } = query;
 
     const filter: Record<string, unknown> = {};
 
@@ -57,6 +57,10 @@ export class UsersService {
 
     if (role) {
       filter.role = role;
+    }
+
+    if (status) {
+      filter.status = status;
     }
 
     const skip = (page - 1) * limit;

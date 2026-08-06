@@ -43,13 +43,21 @@ export function AuthProvider({
 
   const isAuthenticated = user !== null;
 
-  const login = async (accessToken: string) => {
-    localStorage.setItem("accessToken", accessToken);
+  const login = async (
+    accessToken: string
+  ) => {
+    localStorage.setItem(
+      "accessToken",
+      accessToken
+    );
 
-    const response = await authService.getProfile();
+    const response =
+      await authService.getProfile();
 
     setUser(response.data);
-  }
+
+    return response.data;
+  };
 
   const logout = () => {
     localStorage.removeItem("accessToken");

@@ -1,5 +1,8 @@
 Create folder: mkdir ./.../folder_name
+New-Item "src/app/(protected)/admin" -ItemType Directory
+
 Create empty file: New-Item src/auth/auth.controller.ts -ItemType File
+New-Item "src/app/(protected)/admin/layout.tsx" -ItemType File
 
 Git : 
 - git status : Check trạng thái

@@ -1,28 +1,5 @@
-"use client"
-import { LoginForm } from "@/features/auth/components/LoginForm";
-import { useAuth } from "@/features/auth/hooks/use-auth";
+import { CustomerHomePage } from "@/features/customers/pages/customer-home-page";
 
 export default function HomePage() {
-  const { user, isAuthenticated, logout } = useAuth();
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-      <div>
-        <LoginForm />
-
-        <div>
-          <p>Authenticated: {isAuthenticated ? "Yes" : "No"}</p>
-
-          <p>User: {user?.fullName}</p>
-
-          <p>Email: {user?.email}</p>
-
-          <p>Role: {user?.role}</p>
-        </div>
-
-        <button onClick={logout}>
-          Logout
-        </button>
-        </div>
-    </main>
-  );
+  return <CustomerHomePage />;
 }

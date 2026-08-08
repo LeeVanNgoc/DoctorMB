@@ -36,7 +36,6 @@ export default function RootLayout({
         <AuthProvider>
           <Providers>
             {children}
-
             <Toaster />
           </Providers>
         </AuthProvider>

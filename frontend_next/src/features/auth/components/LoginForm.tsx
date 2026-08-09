@@ -45,7 +45,7 @@ export function LoginForm() {
           break;
 
         case "patient":
-          router.push("/user");
+          router.push("/customer");
           break;
 
         default:

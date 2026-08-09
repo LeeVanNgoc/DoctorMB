@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/shared/components/ui/button";
 import { SectionContainer } from "@/shared/components/common/section-container";
 
-import { HERO_CONTENT } from "../../constants/hero";
+import { HERO_CONTENT } from "../constants/hero";
 
 export function HeroSection() {
   return (

@@ -1,7 +1,7 @@
 import { DoctorTable } from "@/features/people/doctors/components/doctor-table";
 import { DoctorToolbar } from "@/features/people/doctors/components/doctor-toolbar";
 
-export default function DoctorsPage() {
+export default function Doctors() {
   return (
     <div className="space-y-6">
       <div>

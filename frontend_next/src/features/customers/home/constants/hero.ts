@@ -5,10 +5,10 @@ export const HERO_CONTENT = {
     "Find experienced doctors, book appointments online, and purchase medicines in one secure healthcare platform.",
   primaryAction: {
     label: "Find a Doctor",
-    href: "/doctors",
+    href: "/customer/doctors",
   },
   secondaryAction: {
     label: "Browse Medicines",
-    href: "/medicines",
+    href: "/customer/medicines",
   },
 } as const;

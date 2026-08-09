@@ -1,6 +1,6 @@
 import { Stethoscope } from "lucide-react";
 
-import type { FeaturedDoctor } from "../types/doctor";
+import type { FeaturedDoctor } from "../../doctors/types/doctor";
 
 export const FEATURED_DOCTORS: FeaturedDoctor[] = [
   {

@@ -1,8 +1,8 @@
 import { SectionContainer } from "@/shared/components/common/section-container";
 import { SectionHeader } from "@/shared/components/common/section-header";
 
-import { WhyChooseCard } from "../../components/why-choose-card";
-import { WHY_CHOOSE_ITEMS } from "../../constants/why-choose";
+import { WhyChooseCard } from "../components/why-choose-card";
+import { WHY_CHOOSE_ITEMS } from "../constants/why-choose";
 
 export function WhyChooseSection() {
   return (

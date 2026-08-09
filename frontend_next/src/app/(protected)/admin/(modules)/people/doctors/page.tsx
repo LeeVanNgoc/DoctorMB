@@ -1,5 +1,5 @@
-import { DoctorTable } from "@/features/people/doctors/components/doctor-table";
-import { DoctorToolbar } from "@/features/people/doctors/components/doctor-toolbar";
+import { DoctorTable } from "@/features/admin/people/doctors/components/doctor-table";
+import { DoctorToolbar } from "@/features/admin/people/doctors/components/doctor-toolbar";
 
 export default function Doctors() {
   return (

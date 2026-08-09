@@ -1,5 +1,5 @@
-import { PatientTable } from "@/features/people/patients/components/patients-table";
-import { PatientToolbar } from "@/features/people/patients/components/patients-toolbar";
+import { PatientTable } from "@/features/admin/people/patients/components/patients-table";
+import { PatientToolbar } from "@/features/admin/people/patients/components/patients-toolbar";
 
 export default function PatientsPage() {
   return (

@@ -1,6 +1,6 @@
 import { ModuleCard } from "@/shared/components/common/module-card";
 
-import { DOCTOR_MODULES } from "@/features/doctor/constants/doctor-modules";
+import { DOCTOR_MODULES } from "@/features/doctor-managerment/constants/doctor-modules";
 
 export default function DoctorPortalPage() {
   return (

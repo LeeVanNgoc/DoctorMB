@@ -1,4 +1,4 @@
-import { MANAGEMENT_NAVIGATION } from "@/features/doctor/management/constants/management-navigation";
+import { MANAGEMENT_NAVIGATION } from "@/features/doctor-managerment/management/constants/management-navigation";
 
 export const DOCTOR_NAVIGATION = {
   management: MANAGEMENT_NAVIGATION,

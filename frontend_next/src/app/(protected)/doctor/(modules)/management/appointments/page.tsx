@@ -1,5 +1,5 @@
 "use client";
-import { AppointmentsContent } from "@/features/doctor/management/appointments/components/appointments-content";
+import { AppointmentsContent } from "@/features/doctor-managerment/management/appointments/components/appointments-content";
 export default function AppointmentsPage() {
   return (
     <div className="space-y-6">

@@ -1,9 +1,9 @@
 import { DoctorStatsGrid }
-  from "@/features/doctor-managerment/management/dashboard/components/doctor-stats-grid";
-import { UpcomingAppointments } from "@/features/doctor-managerment/management/dashboard/components/upcoming-appointments";
-import { RecentActivities } from "@/features/doctor-managerment/management/dashboard/components/recent-activities";
-import { PatientGrowthChart } from "@/features/doctor-managerment/management/dashboard/components/patient-growth-chart";
-import { MonthlyAppointmentsChart } from "@/features/doctor-managerment/management/dashboard/components/monthly-appointments-chart";
+  from "@/features/doctor/management/dashboard/components/doctor-stats-grid";
+import { UpcomingAppointments } from "@/features/doctor/management/dashboard/components/upcoming-appointments";
+import { RecentActivities } from "@/features/doctor/management/dashboard/components/recent-activities";
+import { PatientGrowthChart } from "@/features/doctor/management/dashboard/components/patient-growth-chart";
+import { MonthlyAppointmentsChart } from "@/features/doctor/management/dashboard/components/monthly-appointments-chart";
 
 export default function ManagementDashboardPage() {
   return (

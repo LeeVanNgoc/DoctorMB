@@ -1,6 +1,6 @@
-import { PEOPLE_NAVIGATION } from "@/features/people/dashboard/constants/people-navigation";
-import { MEDICINES_NAVIGATION } from "@/features/medicines/medicines-navigation";
-import { REPORTS_NAVIGATION } from "@/features/reports/reports-navigation";
+import { PEOPLE_NAVIGATION } from "@/features/admin/people/dashboard/constants/people-navigation";
+import { MEDICINES_NAVIGATION } from "@/features/admin/medicines/medicines-navigation";
+import { REPORTS_NAVIGATION } from "@/features/admin/reports/reports-navigation";
 
 export const SIDEBAR_NAVIGATION = {
   people: PEOPLE_NAVIGATION,

@@ -1,4 +1,4 @@
-import { UsersContent } from "@/features/people/users/components/users-content";
+import { UsersContent } from "@/features/admin/people/users/components/users-content";
 
 
 export default function UsersPage() {

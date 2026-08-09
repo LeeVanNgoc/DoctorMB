@@ -10,10 +10,10 @@ export const CUSTOMER_NAVIGATION: CustomerNavigationItem[] = [
   },
   {
     title: "Find Doctor",
-    href: "/doctors",
+    href: "/customer/doctors",
   },
   {
     title: "Medicines",
-    href: "/medicines",
+    href: "/customer/medicines",
   },
 ];

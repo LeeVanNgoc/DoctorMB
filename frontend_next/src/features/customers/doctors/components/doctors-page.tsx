@@ -6,15 +6,14 @@ import { EmptyState } from "@/shared/components/common/empty-state";
 import { PageBanner } from "@/shared/components/common/page-banner";
 import { SectionContainer } from "@/shared/components/common/section-container";
 
-import { DoctorCard } from "../components/doctor-card";
-import { DoctorFilters } from "../components/doctor-filters";
-import { DoctorSearch } from "../components/doctor-search";
+import { DoctorCard } from "./doctor-card";
+import { DoctorFilters } from "./doctor-filters";
+import { DoctorSearch } from "./doctor-search";
 import {
   EXPERIENCE_OPTIONS,
   SPECIALTY_OPTIONS,
 } from "../constants/doctor-filters";
-import { FEATURED_DOCTORS } from "../constants/featured-doctors";
-
+import { FEATURED_DOCTORS } from "../../home/constants/featured-doctors";
 interface DoctorFiltersState {
   search: string;
   specialty: string;

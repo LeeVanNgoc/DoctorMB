@@ -1,8 +1,8 @@
 import { SectionContainer } from "@/shared/components/common/section-container";
 import { SectionHeader } from "@/shared/components/common/section-header";
 
-import { FeatureCard } from "../../components/feature-card";
-import { SERVICES } from "../../constants/services";
+import { FeatureCard } from "../components/feature-card";
+import { SERVICES } from "../constants/services";
 
 export function ServicesSection() {
   return (

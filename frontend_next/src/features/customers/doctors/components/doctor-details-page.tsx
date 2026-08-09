@@ -4,7 +4,7 @@ import { InfoSection } from "@/shared/components/common/info-section";
 import { PageBanner } from "@/shared/components/common/page-banner";
 import { SectionContainer } from "@/shared/components/common/section-container";
 
-import { DoctorProfileCard } from "../components/doctor-profile-card";
+import { DoctorProfileCard } from "./doctor-profile-card";
 import { DOCTOR_DETAILS } from "../constants/doctor-details";
 
 interface DoctorDetailsPageProps {

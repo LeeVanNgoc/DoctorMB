@@ -4,8 +4,8 @@ import { Button } from "@/shared/components/ui/button";
 import { SectionContainer } from "@/shared/components/common/section-container";
 import { SectionHeader } from "@/shared/components/common/section-header";
 
-import { MedicineCard } from "../../components/medicine-card";
-import { FEATURED_MEDICINES } from "../../constants/featured-medicines";
+import { MedicineCard } from "../../medicines/components/medicine-card";
+import { FEATURED_MEDICINES } from "../constants/featured-medicines";
 
 export function FeaturedMedicinesSection() {
   return (

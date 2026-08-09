@@ -1,4 +1,4 @@
-import { DoctorDetailsPage } from "@/features/customers/pages/doctor-details-page";
+import { DoctorDetailsPage } from "@/features/customers/doctors/components/doctor-details-page";
 
 interface PageProps {
   params: Promise<{

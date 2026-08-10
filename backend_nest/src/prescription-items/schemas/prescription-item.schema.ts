@@ -12,40 +12,45 @@ export class PrescriptionItem {
     ref: 'Prescription',
     required: true,
   })
-  prescriptionId: Types.ObjectId;
+  prescriptionId!: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
     ref: 'Medicine',
     required: true,
   })
-  medicineId: Types.ObjectId;
+  medicineId!: Types.ObjectId;
 
   @Prop({
+    type: Number,
     required: true,
     min: 1,
   })
-  quantity: number;
+  quantity!: number;
 
   @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  dosage: string;
+  dosage!: string;
 
   @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  frequency: string;
+  frequency!: string;
 
   @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  duration: string;
+  duration!: string;
 
   @Prop({
+    type: String,
     trim: true,
   })
   instructions?: string;

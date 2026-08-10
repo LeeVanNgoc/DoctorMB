@@ -11,34 +11,37 @@ export type UserDocument = HydratedDocument<User>;
 })
 export class User {
   @Prop({
+    type: String,
     required: true,
   })
-  fullName: string;
+  fullName!: string;
 
   @Prop({
+    type: String,
     required: true,
     unique: true,
   })
-  email: string;
+  email!: string;
 
   @Prop({
+    type: String,
     required: true,
   })
-  password: string;
+  password!: string;
 
   @Prop({
     type: String,
     enum: Role,
     default: Role.PATIENT,
   })
-  role: Role;
+  role!: Role;
 
   @Prop({
     type: String,
     enum: UserStatus,
     default: UserStatus.ACTIVE,
   })
-  status: UserStatus;
+  status!: UserStatus;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

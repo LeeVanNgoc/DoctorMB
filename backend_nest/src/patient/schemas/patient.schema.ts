@@ -22,14 +22,26 @@ export enum BloodType {
 
 @Schema({ _id: false })
 export class EmergencyContact {
-  @Prop({ required: true, trim: true })
-  name: string;
+  @Prop({
+    type: String,
+    required: true,
+    trim: true,
+  })
+  name!: string;
 
-  @Prop({ required: true, trim: true })
-  relationship: string;
+  @Prop({
+    type: String,
+    required: true,
+    trim: true,
+  })
+  relationship!: string;
 
-  @Prop({ required: true, trim: true })
-  phone: string;
+  @Prop({
+    type: String,
+    required: true,
+    trim: true,
+  })
+  phone!: string;
 }
 
 export const EmergencyContactSchema =
@@ -40,34 +52,38 @@ export const EmergencyContactSchema =
   versionKey: false,
 })
 export class Patient {
-  [x: string]: any;
   @Prop({
+    type: String,
     required: true,
     trim: true,
     minlength: 2,
     maxlength: 100,
   })
-  fullName: string;
+  fullName!: string;
 
   @Prop({
+    type: String,
     required: true,
     enum: Gender,
   })
-  gender: Gender;
+  gender!: Gender;
 
   @Prop({
+    type: Date,
     required: true,
   })
-  dateOfBirth: Date;
+  dateOfBirth!: Date;
 
   @Prop({
+    type: String,
     required: true,
     unique: true,
     trim: true,
   })
-  phone: string;
+  phone!: string;
 
   @Prop({
+    type: String,
     unique: true,
     sparse: true,
     trim: true,
@@ -76,11 +92,13 @@ export class Patient {
   email?: string;
 
   @Prop({
+    type: String,
     trim: true,
   })
   address?: string;
 
   @Prop({
+    type: String,
     enum: BloodType,
   })
   bloodType?: BloodType;
@@ -89,9 +107,10 @@ export class Patient {
     type: [String],
     default: [],
   })
-  allergies: string[];
+  allergies!: string[];
 
   @Prop({
+    type: String,
     trim: true,
   })
   insuranceNumber?: string;
@@ -102,9 +121,10 @@ export class Patient {
   emergencyContact?: EmergencyContact;
 
   @Prop({
+    type: Boolean,
     default: true,
   })
-  isActive: boolean;
+  isActive!: boolean;
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);

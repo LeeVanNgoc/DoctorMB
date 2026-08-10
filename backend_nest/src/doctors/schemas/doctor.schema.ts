@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 
 import { User } from '../../users/schemas/user.schema';
+import { Specialty } from '../../specialties/schemas/specialty.schema';
 
 export type DoctorDocument = HydratedDocument<Doctor>;
 
@@ -15,43 +16,49 @@ export class Doctor {
     required: true,
     unique: true,
   })
-  userId: Types.ObjectId;
+  userId!: Types.ObjectId;
 
   @Prop({
+    type: Types.ObjectId,
+    ref: Specialty.name,
+    required: true,
+  })
+  specialty!: Types.ObjectId;
+
+  @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  specialty: string;
+  degree!: string;
 
   @Prop({
-    required: true,
-    trim: true,
-  })
-  degree: string;
-
-  @Prop({
+    type: Number,
     required: true,
     min: 0,
   })
-  experience: number;
+  experience!: number;
 
   @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  clinicAddress: string;
+  clinicAddress!: string;
 
   @Prop({
+    type: Number,
     required: true,
     min: 0,
   })
-  consultationFee: number;
+  consultationFee!: number;
 
   @Prop({
+    type: String,
     default: '',
     trim: true,
   })
-  description: string;
+  description!: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

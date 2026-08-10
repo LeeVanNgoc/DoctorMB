@@ -17,21 +17,21 @@ export class MedicalRecord {
     ref: Patient.name,
     required: true,
   })
-  patientId: Types.ObjectId;
+  patientId!: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
     ref: Doctor.name,
     required: true,
   })
-  doctorId: Types.ObjectId;
+  doctorId!: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
     ref: Appointment.name,
     required: true,
   })
-  appointmentId: Types.ObjectId;
+  appointmentId!: Types.ObjectId;
 
   @Prop({
     type: Types.ObjectId,
@@ -44,29 +44,33 @@ export class MedicalRecord {
     type: [String],
     default: [],
   })
-  symptoms: string[];
+  symptoms!: string[];
 
   @Prop({
+    type: String,
     required: true,
     trim: true,
   })
-  diagnosis: string;
+  diagnosis!: string;
 
   @Prop({
+    type: String,
     default: '',
     trim: true,
   })
-  examination: string;
+  examination!: string;
 
   @Prop({
+    type: String,
     default: '',
     trim: true,
   })
-  notes: string;
+  notes!: string;
 }
 
 export const MedicalRecordSchema = SchemaFactory.createForClass(MedicalRecord);
 
 MedicalRecordSchema.index({ appointmentId: 1 }, { unique: true });
+
 MedicalRecordSchema.index({ patientId: 1 });
 MedicalRecordSchema.index({ doctorId: 1 });

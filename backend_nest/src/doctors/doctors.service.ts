@@ -65,7 +65,8 @@ export class DoctorsService {
   async findOne(id: string) {
     const doctor = await this.doctorModel
       .findById(id)
-      .populate('userId', 'fullName email role');
+      .populate('userId', 'fullName email role')
+      .populate('specialty', 'name slug description');
 
     if (!doctor) {
       throw new NotFoundException('Doctor not found');

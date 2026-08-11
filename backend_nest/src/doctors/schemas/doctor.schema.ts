@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
 import { HydratedDocument, Types } from 'mongoose';
 
 import { User } from '../../users/schemas/user.schema';
@@ -37,7 +38,7 @@ export class Doctor {
     required: true,
     min: 0,
   })
-  experience!: number;
+  yearsOfExperience!: number;
 
   @Prop({
     type: String,
@@ -59,6 +60,27 @@ export class Doctor {
     trim: true,
   })
   description!: string;
-}
 
+  @Prop({
+    type: String,
+    default: '',
+    trim: true,
+  })
+  avatar!: string;
+
+  @Prop({
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 5,
+  })
+  rating!: number;
+
+  @Prop({
+    type: Number,
+    default: 0,
+    min: 0,
+  })
+  totalReviews!: number;
+}
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

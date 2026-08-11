@@ -9,29 +9,34 @@ import {
 
 export class CreateDoctorDto {
   @IsMongoId()
-  userId: string;
+  @IsNotEmpty()
+  userId!: string;
+
+  @IsMongoId()
+  @IsNotEmpty()
+  specialty!: string;
 
   @IsString()
   @IsNotEmpty()
-  specialty: string;
-
-  @IsString()
-  @IsNotEmpty()
-  degree: string;
+  degree!: string;
 
   @IsNumber()
   @Min(0)
-  experience: number;
+  yearsOfExperience!: number;
 
   @IsString()
   @IsNotEmpty()
-  clinicAddress: string;
+  clinicAddress!: string;
 
   @IsNumber()
   @Min(0)
-  consultationFee: number;
+  consultationFee!: number;
 
+  @IsString()
   @IsOptional()
-  @IsString()
   description?: string;
+
+  @IsString()
+  @IsOptional()
+  avatar?: string;
 }

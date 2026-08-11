@@ -7,6 +7,10 @@ import { DoctorsService } from './doctors.service';
 import { Doctor, DoctorSchema } from './schemas/doctor.schema';
 import { User, UserSchema } from '../users/schemas/user.schema';
 
+import {
+  Specialty,
+  SpecialtySchema,
+} from '../specialties/schemas/specialty.schema';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -17,6 +21,10 @@ import { User, UserSchema } from '../users/schemas/user.schema';
       {
         name: User.name,
         schema: UserSchema,
+      },
+      {
+        name: Specialty.name,
+        schema: SpecialtySchema,
       },
     ]),
   ],

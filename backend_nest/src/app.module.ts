@@ -17,6 +17,9 @@ import { PrescriptionsModule } from './prescriptions/prescriptions.module';
 import { PrescriptionItemsModule } from './prescription-items/prescription-items.module';
 import { MedicalRecordsModule } from './medical-records/medical-records.module';
 import { SpecialtiesModule } from './specialties/specialties.module';
+import { SchedulesModule } from './schedules/schedules.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { DoctorExperiencesModule } from './experience/experience.module';
 
 @Module({
   imports: [
@@ -42,6 +45,9 @@ import { SpecialtiesModule } from './specialties/specialties.module';
     PrescriptionItemsModule,
     MedicalRecordsModule,
     SpecialtiesModule,
+    SchedulesModule,
+    ReviewsModule,
+    DoctorExperiencesModule,
   ],
   controllers: [AppController],
   providers: [

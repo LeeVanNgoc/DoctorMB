@@ -82,7 +82,16 @@ export class DoctorsService {
     }
 
     // 7. Create Doctor
-    const doctor = await this.doctorModel.create(createDoctorDto);
+    const doctor = await this.doctorModel.create({
+      userId: new Types.ObjectId(userId),
+      specialty: new Types.ObjectId(specialty),
+      degree: createDoctorDto.degree,
+      experience: createDoctorDto.experience,
+      clinicAddress: createDoctorDto.clinicAddress,
+      consultationFee: createDoctorDto.consultationFee,
+      description: createDoctorDto.description,
+      avatar: createDoctorDto.avatar,
+    });
 
     // 8. Return populated Doctor
     return this.doctorModel

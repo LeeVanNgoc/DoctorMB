@@ -9,47 +9,45 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { DoctorExperiencesService } from './experience.service';
-import { CreateDoctorExperienceDto } from './dto/create-experience.dto';
-import { UpdateDoctorExperienceDto } from './dto/update-experience.dto';
+import { ExperiencesService } from './experience.service';
+import { CreateExperienceDto } from './dto/create-experience.dto';
+import { UpdateExperienceDto } from './dto/update-experience.dto';
 
 import { JwtAuthGuard } from '../common/guards/jwt_auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
 
-@Controller('doctor-experiences')
+@Controller('experiences')
 @UseGuards(JwtAuthGuard, RolesGuard)
-export class DoctorExperiencesController {
-  constructor(
-    private readonly doctorExperiencesService: DoctorExperiencesService,
-  ) {}
+export class ExperiencesController {
+  constructor(private readonly experiencesService: ExperiencesService) {}
 
   @Post()
   @Roles(Role.ADMIN, Role.DOCTOR)
   create(
     @Body()
-    createDoctorExperienceDto: CreateDoctorExperienceDto,
+    createExperienceDto: CreateExperienceDto,
   ) {
-    return this.doctorExperiencesService.create(createDoctorExperienceDto);
+    return this.experiencesService.create(createExperienceDto);
   }
 
   @Get()
   @Roles(Role.ADMIN, Role.DOCTOR)
   findAll() {
-    return this.doctorExperiencesService.findAll();
+    return this.experiencesService.findAll();
   }
 
   @Get('doctor/:doctorId')
   @Roles(Role.ADMIN, Role.DOCTOR)
   findByDoctor(@Param('doctorId') doctorId: string) {
-    return this.doctorExperiencesService.findByDoctor(doctorId);
+    return this.experiencesService.findByDoctor(doctorId);
   }
 
   @Get(':id')
   @Roles(Role.ADMIN, Role.DOCTOR)
   findOne(@Param('id') id: string) {
-    return this.doctorExperiencesService.findOne(id);
+    return this.experiencesService.findOne(id);
   }
 
   @Patch(':id')
@@ -57,14 +55,14 @@ export class DoctorExperiencesController {
   update(
     @Param('id') id: string,
     @Body()
-    updateDoctorExperienceDto: UpdateDoctorExperienceDto,
+    updateExperienceDto: UpdateExperienceDto,
   ) {
-    return this.doctorExperiencesService.update(id, updateDoctorExperienceDto);
+    return this.experiencesService.update(id, updateExperienceDto);
   }
 
   @Delete(':id')
   @Roles(Role.ADMIN, Role.DOCTOR)
   remove(@Param('id') id: string) {
-    return this.doctorExperiencesService.remove(id);
+    return this.experiencesService.remove(id);
   }
 }

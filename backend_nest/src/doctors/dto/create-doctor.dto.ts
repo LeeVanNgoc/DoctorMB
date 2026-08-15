@@ -22,7 +22,7 @@ export class CreateDoctorDto {
 
   @IsNumber()
   @Min(0)
-  yearsOfExperience!: number;
+  experience!: number;
 
   @IsString()
   @IsNotEmpty()

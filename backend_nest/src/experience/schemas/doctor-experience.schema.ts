@@ -3,12 +3,12 @@ import { HydratedDocument, Types } from 'mongoose';
 
 import { Doctor } from '../../doctors/schemas/doctor.schema';
 
-export type DoctorExperienceDocument = HydratedDocument<DoctorExperience>;
+export type ExperienceDocument = HydratedDocument<Experience>;
 
 @Schema({
   timestamps: true,
 })
-export class DoctorExperience {
+export class Experience {
   @Prop({
     type: Types.ObjectId,
     ref: Doctor.name,
@@ -57,5 +57,4 @@ export class DoctorExperience {
   description!: string;
 }
 
-export const DoctorExperienceSchema =
-  SchemaFactory.createForClass(DoctorExperience);
+export const ExperienceSchema = SchemaFactory.createForClass(Experience);

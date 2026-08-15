@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import {
-  DoctorExperience,
-  DoctorExperienceSchema,
+  Experience,
+  ExperienceSchema,
 } from './schemas/doctor-experience.schema';
 
-import { DoctorExperiencesController } from './experience.controller';
-import { DoctorExperiencesService } from './experience.service';
+import { ExperiencesController } from './experience.controller';
+import { ExperiencesService } from './experience.service';
 
 import { Doctor, DoctorSchema } from '../doctors/schemas/doctor.schema';
 
@@ -15,8 +15,8 @@ import { Doctor, DoctorSchema } from '../doctors/schemas/doctor.schema';
   imports: [
     MongooseModule.forFeature([
       {
-        name: DoctorExperience.name,
-        schema: DoctorExperienceSchema,
+        name: Experience.name,
+        schema: ExperienceSchema,
       },
       {
         name: Doctor.name,
@@ -24,8 +24,8 @@ import { Doctor, DoctorSchema } from '../doctors/schemas/doctor.schema';
       },
     ]),
   ],
-  controllers: [DoctorExperiencesController],
-  providers: [DoctorExperiencesService],
-  exports: [DoctorExperiencesService],
+  controllers: [ExperiencesController],
+  providers: [ExperiencesService],
+  exports: [ExperiencesService],
 })
-export class DoctorExperiencesModule {}
+export class ExperiencesModule {}

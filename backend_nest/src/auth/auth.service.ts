@@ -18,12 +18,15 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterDto) {
-    const { fullName, email, password } = registerDto;
-    const existingUser = await this.usersService.findByEmail(registerDto.email);
+    const { email, password } = registerDto;
+
+    const existingUser = await this.usersService.findByEmail(email);
 
     if (existingUser) {
       throw new ConflictException('Email already exists');
     }
+
+    const fullName = email.split('@')[0];
 
     const hashPassword = await bcrypt.hash(password, 10);
 
@@ -33,8 +36,20 @@ export class AuthService {
       password: hashPassword,
     });
 
+    const payload = {
+      sub: user._id,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = this.jwtService.sign(payload);
+
     const { password: _, ...result } = user.toObject();
-    return result;
+
+    return {
+      accessToken,
+      user: result,
+    };
   }
 
   async login(loginDto: LoginDTO) {

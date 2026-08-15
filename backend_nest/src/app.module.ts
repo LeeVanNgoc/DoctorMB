@@ -19,7 +19,7 @@ import { MedicalRecordsModule } from './medical-records/medical-records.module';
 import { SpecialtiesModule } from './specialties/specialties.module';
 import { SchedulesModule } from './schedules/schedules.module';
 import { ReviewsModule } from './reviews/reviews.module';
-import { DoctorExperiencesModule } from './experience/experience.module';
+import { ExperiencesModule } from './experience/experience.module';
 
 @Module({
   imports: [
@@ -47,7 +47,7 @@ import { DoctorExperiencesModule } from './experience/experience.module';
     SpecialtiesModule,
     SchedulesModule,
     ReviewsModule,
-    DoctorExperiencesModule,
+    ExperiencesModule,
   ],
   controllers: [AppController],
   providers: [

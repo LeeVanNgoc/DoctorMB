@@ -7,28 +7,27 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
 import {
-  DoctorExperience,
-  DoctorExperienceDocument,
+  Experience,
+  ExperienceDocument,
 } from './schemas/doctor-experience.schema';
 
-import { CreateDoctorExperienceDto } from './dto/create-experience.dto';
-import { UpdateDoctorExperienceDto } from './dto/update-experience.dto';
+import { CreateExperienceDto } from './dto/create-experience.dto';
+import { UpdateExperienceDto } from './dto/update-experience.dto';
 
 import { Doctor, DoctorDocument } from '../doctors/schemas/doctor.schema';
 
 @Injectable()
-export class DoctorExperiencesService {
+export class ExperiencesService {
   constructor(
-    @InjectModel(DoctorExperience.name)
-    private readonly experienceModel: Model<DoctorExperienceDocument>,
+    @InjectModel(Experience.name)
+    private readonly experienceModel: Model<ExperienceDocument>,
 
     @InjectModel(Doctor.name)
     private readonly doctorModel: Model<DoctorDocument>,
   ) {}
 
-  async create(createDoctorExperienceDto: CreateDoctorExperienceDto) {
-    const { doctorId, startDate, endDate, isCurrent } =
-      createDoctorExperienceDto;
+  async create(createExperienceDto: CreateExperienceDto) {
+    const { doctorId, startDate, endDate, isCurrent } = createExperienceDto;
 
     // 1. Validate Doctor ID
     if (!Types.ObjectId.isValid(doctorId)) {
@@ -72,7 +71,7 @@ export class DoctorExperiencesService {
 
     // 5. Create experience
     const experience = new this.experienceModel({
-      ...createDoctorExperienceDto,
+      ...createExperienceDto,
       doctorId: new Types.ObjectId(doctorId),
       startDate: parsedStartDate,
       endDate: parsedEndDate,
@@ -139,10 +138,7 @@ export class DoctorExperiencesService {
     return experience;
   }
 
-  async update(
-    id: string,
-    updateDoctorExperienceDto: UpdateDoctorExperienceDto,
-  ) {
+  async update(id: string, updateExperienceDto: UpdateExperienceDto) {
     if (!Types.ObjectId.isValid(id)) {
       throw new BadRequestException('Invalid experience ID');
     }
@@ -154,16 +150,16 @@ export class DoctorExperiencesService {
     }
 
     const startDate =
-      updateDoctorExperienceDto.startDate ??
+      updateExperienceDto.startDate ??
       existingExperience.startDate.toISOString();
 
     const endDate =
-      updateDoctorExperienceDto.endDate !== undefined
-        ? updateDoctorExperienceDto.endDate
+      updateExperienceDto.endDate !== undefined
+        ? updateExperienceDto.endDate
         : existingExperience.endDate?.toISOString();
 
     const isCurrent =
-      updateDoctorExperienceDto.isCurrent ?? existingExperience.isCurrent;
+      updateExperienceDto.isCurrent ?? existingExperience.isCurrent;
 
     const parsedStartDate = new Date(startDate);
 
@@ -192,7 +188,7 @@ export class DoctorExperiencesService {
     }
 
     const updateData = {
-      ...updateDoctorExperienceDto,
+      ...updateExperienceDto,
       startDate: parsedStartDate,
       endDate: parsedEndDate,
       isCurrent,

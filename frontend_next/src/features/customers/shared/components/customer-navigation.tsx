@@ -1,6 +1,6 @@
 import Link from "next/link";
-
 import { CUSTOMER_NAVIGATION } from "../constants/navigation";
+
 
 export function CustomerNavigation() {
   return (

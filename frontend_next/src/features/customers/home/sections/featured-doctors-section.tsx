@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 import { Button } from "@/shared/components/ui/button";
@@ -5,10 +8,19 @@ import { SectionContainer } from "@/shared/components/common/section-container";
 import { SectionHeader } from "@/shared/components/common/section-header";
 
 import { DoctorCard } from "../../doctors/components/doctor-card";
-import { FEATURED_DOCTORS } from "../constants/featured-doctors";
 
+import { useDoctors } from "../../doctors/hooks/use-doctors";
+
+const PAGE_SIZE = 6;
 
 export function FeaturedDoctorsSection() {
+  const [page, setPage] = useState(1);
+
+  const { doctors } = useDoctors({
+    page,
+    limit: PAGE_SIZE,
+  });
+
   return (
     <SectionContainer>
       <SectionHeader
@@ -17,19 +29,14 @@ export function FeaturedDoctorsSection() {
       />
 
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {FEATURED_DOCTORS.map((doctor) => (
-          <DoctorCard
-            key={doctor.id}
-            doctor={doctor}
-          />
+        {doctors.map((doctor) => (
+          <DoctorCard key={doctor._id} doctor={doctor} />
         ))}
       </div>
 
       <div className="mt-10 flex justify-center">
         <Link href="/customer/doctors">
-          <Button variant="outline">
-            View All Doctors
-          </Button>
+          <Button variant="outline">View All Doctors</Button>
         </Link>
       </div>
     </SectionContainer>

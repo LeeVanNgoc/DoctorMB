@@ -8,7 +8,7 @@ export interface DoctorDetail {
   name: string;
   specialty: string;
   hospital: string;
-  yearsOfExperience: number;
+  experience: number;
   rating: number;
   totalReviews: number;
   consultationFee: number;
@@ -16,7 +16,6 @@ export interface DoctorDetail {
 
   about: string;
   education: string[];
-  experience: string[];
 
   schedule: DoctorSchedule[];
 }

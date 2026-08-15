@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateDoctorExperienceDto {
+export class CreateExperienceDto {
   @IsMongoId()
   @IsNotEmpty()
   doctorId!: string;

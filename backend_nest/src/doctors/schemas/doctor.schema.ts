@@ -38,7 +38,7 @@ export class Doctor {
     required: true,
     min: 0,
   })
-  yearsOfExperience!: number;
+  experience!: number;
 
   @Prop({
     type: String,

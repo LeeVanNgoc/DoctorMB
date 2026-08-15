@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -7,40 +9,57 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card";
 
-import type { FeaturedDoctor } from "../types/doctor";
+import type { Doctor } from "../types/doctor";
 
 interface DoctorCardProps {
-  doctor: FeaturedDoctor;
+  doctor: Doctor;
 }
 
-export function DoctorCard({
-  doctor,
-}: DoctorCardProps) {
-  const Icon = doctor.icon;
+export function DoctorCard({ doctor }: DoctorCardProps) {
+  console.log("Rendering DoctorCard for doctor:", doctor);
+  const doctorName = doctor.userId.fullName;
+  const specialtyName = doctor.specialty.name;
 
   return (
-    <Link
-      href={doctor.href}
-      className="block h-full"
-    >
+    <Link href={`/customer/doctors/${doctor._id}`} className="block h-full">
       <Card className="h-full transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
         <CardHeader className="items-center text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-            <Icon className="h-8 w-8 text-primary" />
+          <div className="relative h-20 w-20 overflow-hidden rounded-full bg-primary/10">
+            {doctor.avatar ? (
+              <img
+                src={doctor.avatar}
+                alt={doctorName}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center">
+                <span className="text-2xl font-semibold text-primary">
+                  {doctorName.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
           </div>
 
-          <CardTitle className="mt-4">
-            {doctor.name}
-          </CardTitle>
+          <CardTitle className="mt-4">{doctorName}</CardTitle>
         </CardHeader>
 
-        <CardContent className="space-y-2 text-center">
-          <p className="font-medium text-primary">
-            {doctor.specialty}
-          </p>
+        <CardContent className="space-y-3 text-center">
+          <p className="font-medium text-primary">{specialtyName}</p>
 
           <p className="text-sm text-muted-foreground">
-            {doctor.experience}
+            {doctor.experience} years of experience
+          </p>
+
+          <div className="flex items-center justify-center gap-2 text-sm">
+            <span className="font-medium">★ {doctor.rating.toFixed(1)}</span>
+
+            <span className="text-muted-foreground">
+              ({doctor.totalReviews} reviews)
+            </span>
+          </div>
+
+          <p className="font-medium">
+            {doctor.consultationFee.toLocaleString()} VND
           </p>
         </CardContent>
       </Card>

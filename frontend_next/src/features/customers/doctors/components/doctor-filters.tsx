@@ -12,11 +12,11 @@ import type { FilterOption } from "../types/doctor-filter";
 
 interface DoctorFiltersProps {
   specialty: string;
-  experience: string;
+  experience: number | undefined;
   specialtyOptions: FilterOption[];
   experienceOptions: FilterOption[];
   onSpecialtyChange: (value: string) => void;
-  onExperienceChange: (value: string) => void;
+  onExperienceChange: (value: number | undefined) => void;
 }
 
 export function DoctorFilters({
@@ -28,7 +28,7 @@ export function DoctorFilters({
   onExperienceChange,
 }: DoctorFiltersProps) {
   return (
-    <div className="mt-6 grid gap-4 md:grid-cols-2">
+    <div className="grid gap-3 sm:grid-cols-2">
       <Select
         value={specialty}
         onValueChange={(value) => {
@@ -36,15 +36,13 @@ export function DoctorFilters({
         }}
       >
         <SelectTrigger>
-          <SelectValue placeholder="Select specialty" />
+          <SelectValue placeholder="Specialty" />
         </SelectTrigger>
 
         <SelectContent>
+          <SelectItem value="">All</SelectItem>
           {specialtyOptions.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-            >
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
           ))}
@@ -52,21 +50,18 @@ export function DoctorFilters({
       </Select>
 
       <Select
-        value={experience}
+        value={experience !== undefined ? String(experience) : ""}
         onValueChange={(value) => {
-          onExperienceChange(value ?? "");
+          onExperienceChange(value ? Number(value) : undefined);
         }}
       >
         <SelectTrigger>
-          <SelectValue placeholder="Select experience" />
+          <SelectValue placeholder="Experience" />
         </SelectTrigger>
 
         <SelectContent>
           {experienceOptions.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-            >
+            <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
           ))}

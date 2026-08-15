@@ -1,10 +1,7 @@
 import { Star, BriefcaseBusiness, Building2, Wallet } from "lucide-react";
 
 import { Button } from "@/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-} from "@/shared/components/ui/card";
+import { Card, CardContent } from "@/shared/components/ui/card";
 import { Avatar, AvatarFallback } from "@/shared/components/ui/avatar";
 
 import type { DoctorDetail } from "../types/doctor-detail";
@@ -13,9 +10,7 @@ interface DoctorProfileCardProps {
   doctor: DoctorDetail;
 }
 
-export function DoctorProfileCard({
-  doctor,
-}: DoctorProfileCardProps) {
+export function DoctorProfileCard({ doctor }: DoctorProfileCardProps) {
   return (
     <Card>
       <CardContent className="p-8">
@@ -34,13 +29,9 @@ export function DoctorProfileCard({
 
           <div className="flex-1 space-y-5">
             <div>
-              <h1 className="text-3xl font-bold">
-                {doctor.name}
-              </h1>
+              <h1 className="text-3xl font-bold">{doctor.name}</h1>
 
-              <p className="text-lg text-primary">
-                {doctor.specialty}
-              </p>
+              <p className="text-lg text-primary">{doctor.specialty}</p>
             </div>
 
             <div className="grid gap-3 md:grid-cols-2">
@@ -51,9 +42,7 @@ export function DoctorProfileCard({
 
               <div className="flex items-center gap-2">
                 <BriefcaseBusiness className="h-4 w-4 text-primary" />
-                <span>
-                  {doctor.yearsOfExperience} Years Experience
-                </span>
+                <span>{doctor.experience} Years Experience</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -69,9 +58,7 @@ export function DoctorProfileCard({
               </div>
             </div>
 
-            <Button size="lg">
-              Book Appointment
-            </Button>
+            <Button size="lg">Book Appointment</Button>
           </div>
         </div>
       </CardContent>

@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Patch,
@@ -19,6 +18,7 @@ import { JwtAuthGuard } from '../common/guards/jwt_auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../common/enums/role.enum';
+import { CreateDoctorAccountDto } from './dto/create-doctor-account.dto';
 
 @Controller('doctors')
 export class DoctorsController {
@@ -53,6 +53,17 @@ export class DoctorsController {
   }
 
   /**
+   * Get all doctors for admin
+   * Admin only
+   */
+  @Get('admin')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  findAllForAdmin(@Query() query: QueryDoctorDto) {
+    return this.doctorsService.findAllForAdmin(query);
+  }
+
+  /**
    * Get doctor detail
    *
    * Public API
@@ -74,13 +85,35 @@ export class DoctorsController {
   }
 
   /**
+   * Create doctor account
+   * Admin only
+   */
+  @Post('account')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  createAccount(@Body() createDoctorAccountDto: CreateDoctorAccountDto) {
+    return this.doctorsService.createAccount(createDoctorAccountDto);
+  }
+
+  /**
+   * Activate doctor profile
+   * Admin only
+   */
+  @Patch(':id/activate')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  activate(@Param('id') id: string) {
+    return this.doctorsService.activate(id);
+  }
+
+  /**
    * Delete doctor profile
    * Admin only
    */
-  @Delete(':id')
+  @Patch(':id/deactivate')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  remove(@Param('id') id: string) {
-    return this.doctorsService.remove(id);
+  deactivate(@Param('id') id: string) {
+    return this.doctorsService.deactivate(id);
   }
 }

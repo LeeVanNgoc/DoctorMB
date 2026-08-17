@@ -35,8 +35,4 @@ export class CreateDoctorDto {
   @IsString()
   @IsOptional()
   description?: string;
-
-  @IsString()
-  @IsOptional()
-  avatar?: string;
 }

@@ -4,6 +4,7 @@ import { HydratedDocument, Types } from 'mongoose';
 
 import { User } from '../../users/schemas/user.schema';
 import { Specialty } from '../../specialties/schemas/specialty.schema';
+import { DoctorProfileStatus } from '../../common/enums/doctor-profile-status.enum';
 
 export type DoctorDocument = HydratedDocument<Doctor>;
 
@@ -22,51 +23,39 @@ export class Doctor {
   @Prop({
     type: Types.ObjectId,
     ref: Specialty.name,
-    required: true,
   })
-  specialty!: Types.ObjectId;
+  specialty?: Types.ObjectId;
 
   @Prop({
     type: String,
-    required: true,
     trim: true,
   })
-  degree!: string;
+  degree?: string;
 
   @Prop({
     type: Number,
-    required: true,
     min: 0,
   })
-  experience!: number;
+  experience?: number;
 
   @Prop({
     type: String,
-    required: true,
     trim: true,
   })
-  clinicAddress!: string;
+  clinicAddress?: string;
 
   @Prop({
     type: Number,
-    required: true,
     min: 0,
   })
-  consultationFee!: number;
+  consultationFee?: number;
 
   @Prop({
     type: String,
     default: '',
     trim: true,
   })
-  description!: string;
-
-  @Prop({
-    type: String,
-    default: '',
-    trim: true,
-  })
-  avatar!: string;
+  description?: string;
 
   @Prop({
     type: Number,
@@ -82,5 +71,12 @@ export class Doctor {
     min: 0,
   })
   totalReviews!: number;
+
+  @Prop({
+    type: String,
+    enum: DoctorProfileStatus,
+    default: DoctorProfileStatus.INCOMPLETE,
+  })
+  profileStatus!: DoctorProfileStatus;
 }
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

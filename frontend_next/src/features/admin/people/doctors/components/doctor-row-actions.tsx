@@ -2,14 +2,8 @@
 
 import { useState } from "react";
 
-import {
-  Eye,
-  MoreHorizontal,
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { Eye, MoreHorizontal, Pencil, Power } from "lucide-react";
 
-import { Button } from "@/shared/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,24 +14,49 @@ import {
 
 import { Doctor } from "../types";
 import { ViewDoctorDialog } from "../dialogs/view-doctor-dialog";
-import { DeleteDoctorDialog } from "../dialogs/delete-doctor-dialog";
-import { EditDoctorDialog } from "../dialogs/edit-doctor-dialog";
+import { ActivateDoctorDialog } from "../dialogs/activate-doctor-dialog";
+import { UpdateDoctorDialog } from "../dialogs/update-doctor-dialog";
+import {
+  activateDoctor,
+  deactivateDoctor,
+} from "../services/admin-doctor-service";
 
 interface DoctorRowActionsProps {
   doctor: Doctor;
+  onDoctorStatusChanged: () => Promise<void>;
 }
 
 export function DoctorRowActions({
   doctor,
+  onDoctorStatusChanged,
 }: DoctorRowActionsProps) {
-  const [openViewDialog, setOpenViewDialog] =
-    useState(false);
+  const [openViewDialog, setOpenViewDialog] = useState(false);
 
-  const [openEditDialog, setOpenEditDialog] =
-    useState(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
 
-  const [openDeleteDialog, setOpenDeleteDialog] =
-    useState(false);
+  const [openActivateDialog, setOpenActivateDialog] = useState(false);
+
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+
+  const handleStatusChange = async () => {
+    try {
+      setIsUpdatingStatus(true);
+
+      if (doctor.userId.status === "active") {
+        await deactivateDoctor(doctor._id);
+      } else {
+        await activateDoctor(doctor._id);
+      }
+
+      await onDoctorStatusChanged();
+
+      setOpenActivateDialog(false);
+    } catch (error) {
+      console.error("Failed to update doctor status:", error);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
 
   return (
     <>
@@ -62,28 +81,29 @@ export function DoctorRowActions({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
-          <DropdownMenuItem
-            onClick={() => setOpenViewDialog(true)}
-          >
+          <DropdownMenuItem onClick={() => setOpenViewDialog(true)}>
             <Eye className="mr-2 size-4" />
             View
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            onClick={() => setOpenEditDialog(true)}
-          >
+          <DropdownMenuItem onClick={() => setOpenUpdateDialog(true)}>
             <Pencil className="mr-2 size-4" />
-            Edit
+            Update
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            className="text-destructive focus:text-destructive"
-            onClick={() => setOpenDeleteDialog(true)}
+            className={
+              doctor.userId.status === "active"
+                ? "text-destructive focus:text-destructive"
+                : ""
+            }
+            onClick={() => setOpenActivateDialog(true)}
           >
-            <Trash2 className="mr-2 size-4" />
-            Delete
+            <Power className="mr-2 size-4" />
+
+            {doctor.userId.status === "active" ? "Deactivate" : "Activate"}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -93,16 +113,19 @@ export function DoctorRowActions({
         doctor={doctor}
       />
 
-      <EditDoctorDialog
-        open={openEditDialog}
-        onOpenChange={setOpenEditDialog}
+      <UpdateDoctorDialog
+        open={openUpdateDialog}
+        onOpenChange={setOpenUpdateDialog}
         doctor={doctor}
       />
 
-      <DeleteDoctorDialog
-        open={openDeleteDialog}
-        onOpenChange={setOpenDeleteDialog}
+      <ActivateDoctorDialog
+        open={openActivateDialog}
+        onOpenChange={setOpenActivateDialog}
         doctor={doctor}
+        action={doctor.userId.status === "active" ? "deactivate" : "activate"}
+        onConfirm={handleStatusChange}
+        isLoading={isUpdatingStatus}
       />
     </>
   );

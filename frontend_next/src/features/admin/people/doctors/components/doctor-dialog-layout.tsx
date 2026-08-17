@@ -28,19 +28,12 @@ export function DoctorDialogLayout({
   children,
 }: DoctorDialogLayoutProps) {
   return (
-    <Dialog
-      open={open}
-      onOpenChange={onOpenChange}
-    >
-      <DialogContent className="sm:max-w-xl">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-4xl">
         <DialogHeader>
-          <DialogTitle>
-            {title}
-          </DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
 
-          <DialogDescription>
-            {description}
-          </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
         {children}

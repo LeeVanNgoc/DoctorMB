@@ -7,7 +7,7 @@ import { PageBanner } from "@/shared/components/common/page-banner";
 import { SectionContainer } from "@/shared/components/common/section-container";
 
 import { useDoctors } from "../hooks/use-doctors";
-import { useSpecialties } from "../hooks/use-specialties";
+import { useSpecialties } from "../../../specialties/hooks/use-specialties";
 import { EXPERIENCE_OPTIONS } from "../constants/doctor-filters";
 
 import { DoctorFilters } from "./doctor-filters";

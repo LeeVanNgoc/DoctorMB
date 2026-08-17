@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -16,9 +15,8 @@ interface DoctorCardProps {
 }
 
 export function DoctorCard({ doctor }: DoctorCardProps) {
-  console.log("Rendering DoctorCard for doctor:", doctor);
   const doctorName = doctor.userId.fullName;
-  const specialtyName = doctor.specialty.name;
+  const specialtyName = doctor.specialty?.name ?? "No specialty";
 
   return (
     <Link href={`/customer/doctors/${doctor._id}`} className="block h-full">
@@ -47,9 +45,10 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
           <p className="font-medium text-primary">{specialtyName}</p>
 
           <p className="text-sm text-muted-foreground">
-            {doctor.experience} years of experience
+            {doctor.experience != null
+              ? `${doctor.experience} years of experience`
+              : "Experience not available"}
           </p>
-
           <div className="flex items-center justify-center gap-2 text-sm">
             <span className="font-medium">★ {doctor.rating.toFixed(1)}</span>
 
@@ -59,7 +58,9 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
           </div>
 
           <p className="font-medium">
-            {doctor.consultationFee.toLocaleString()} VND
+            {doctor.consultationFee != null
+              ? `${doctor.consultationFee.toLocaleString()} VND`
+              : "Consultation fee not available"}
           </p>
         </CardContent>
       </Card>

@@ -1,3 +1,4 @@
+"use client";
 import {
   Table,
   TableBody,
@@ -8,13 +9,40 @@ import {
 } from "@/shared/components/ui/table";
 
 import { EmptyState } from "@/shared/components/common/empty-state";
-
-import { MOCK_DOCTORS } from "../constants/mock-doctor";
-import { DoctorRowActions } from "./doctor-row-actions";
-import { DoctorStatusBadge } from "./doctor-status-badge";
 import { DataPagination } from "@/shared/components/common/data-pagination";
 
-export function DoctorTable() {
+import { useAdminDoctors } from "../hooks/use-admin-doctors";
+
+import { DoctorRowActions } from "./doctor-row-actions";
+import { DoctorStatusBadge } from "./doctor-status-badge";
+import { DoctorFilter } from "../types";
+
+interface DoctorTableProps {
+  filters: DoctorFilter;
+  onFiltersChange: (filters: DoctorFilter) => void;
+}
+
+export function DoctorTable({ filters, onFiltersChange }: DoctorTableProps) {
+  const {
+  doctors,
+  pagination,
+  isLoading,
+  error,
+  refetch,
+} = useAdminDoctors(filters);
+
+  if (isLoading) {
+    return (
+      <div className="rounded-lg border bg-background p-6">
+        Loading doctors...
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="rounded-lg border bg-background p-6">{error}</div>;
+  }
+
   return (
     <div className="rounded-lg border bg-background">
       <Table>
@@ -32,14 +60,12 @@ export function DoctorTable() {
 
             <TableHead>Status</TableHead>
 
-            <TableHead className="w-24 text-right">
-              Actions
-            </TableHead>
+            <TableHead className="w-24 text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {MOCK_DOCTORS.length === 0 ? (
+          {doctors.length === 0 ? (
             <TableRow>
               <TableCell colSpan={7}>
                 <EmptyState
@@ -49,36 +75,29 @@ export function DoctorTable() {
               </TableCell>
             </TableRow>
           ) : (
-            MOCK_DOCTORS.map((doctor) => (
-              <TableRow key={doctor.id}>
-                <TableCell>
-                  {doctor.fullName}
-                </TableCell>
+            doctors.map((doctor) => (
+              <TableRow key={doctor._id}>
+                <TableCell>{doctor.userId.fullName}</TableCell>
+
+                <TableCell>{doctor.userId.email}</TableCell>
 
                 <TableCell>
-                  {doctor.email}
+                  {doctor.specialty?.name ?? "Not assigned"}
                 </TableCell>
 
-                <TableCell>
-                  {doctor.specialty}
-                </TableCell>
+                <TableCell>{doctor.userId.phone}</TableCell>
+
+                <TableCell>{doctor.experience} years</TableCell>
 
                 <TableCell>
-                  {doctor.phone}
-                </TableCell>
-
-                <TableCell>
-                  {doctor.yearsOfExperience} years
-                </TableCell>
-
-                <TableCell>
-                  <DoctorStatusBadge
-                    status={doctor.status}
-                  />
+                  <DoctorStatusBadge status={doctor.userId.status} />
                 </TableCell>
 
                 <TableCell className="text-right">
-                  <DoctorRowActions doctor={doctor} />
+                  <DoctorRowActions
+  doctor={doctor}
+  onDoctorStatusChanged={refetch}
+/>
                 </TableCell>
               </TableRow>
             ))
@@ -87,10 +106,23 @@ export function DoctorTable() {
       </Table>
 
       <DataPagination
-        currentPage={1}
-        pageSize={10}
-        totalItems={MOCK_DOCTORS.length}
-        resourceName="users"
+        currentPage={pagination.page}
+        pageSize={pagination.limit}
+        totalItems={pagination.total}
+        resourceName="doctors"
+        onPageChange={(page) =>
+          onFiltersChange({
+            ...filters,
+            page,
+          })
+        }
+        onPageSizeChange={(size) =>
+          onFiltersChange({
+            ...filters,
+            page: 1,
+            limit: size,
+          })
+        }
       />
     </div>
   );

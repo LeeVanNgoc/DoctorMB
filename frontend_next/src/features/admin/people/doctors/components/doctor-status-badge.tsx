@@ -6,6 +6,11 @@ interface DoctorStatusBadgeProps {
   status: DoctorStatus;
 }
 
+const STATUS_LABELS: Record<DoctorStatus, string> = {
+  active: "Active",
+  inactive: "Inactive",
+};
+
 export function DoctorStatusBadge({
   status,
 }: DoctorStatusBadgeProps) {
@@ -17,7 +22,7 @@ export function DoctorStatusBadge({
           : "secondary"
       }
     >
-      {status}
+      {STATUS_LABELS[status]}
     </Badge>
   );
 }

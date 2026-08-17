@@ -1,4 +1,5 @@
 import {
+  IsEmail,
   IsMongoId,
   IsNumber,
   IsOptional,
@@ -7,33 +8,45 @@ import {
 } from 'class-validator';
 
 export class UpdateDoctorDto {
-  @IsMongoId()
+  // User information
+
   @IsOptional()
+  @IsString()
+  fullName?: string;
+
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  // Doctor information
+
+  @IsOptional()
+  @IsMongoId()
   specialty?: string;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   degree?: string;
 
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  @IsOptional()
-  yearsOfExperience?: number;
+  experience?: number;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   clinicAddress?: string;
 
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  @IsOptional()
   consultationFee?: number;
 
-  @IsString()
   @IsOptional()
+  @IsString()
   description?: string;
-
-  @IsString()
-  @IsOptional()
-  avatar?: string;
 }

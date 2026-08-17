@@ -6,6 +6,7 @@ import { DoctorsService } from './doctors.service';
 
 import { Doctor, DoctorSchema } from './schemas/doctor.schema';
 import { User, UserSchema } from '../users/schemas/user.schema';
+import { UsersModule } from '../users/users.module';
 
 import {
   Specialty,
@@ -27,6 +28,7 @@ import {
         schema: SpecialtySchema,
       },
     ]),
+    UsersModule,
   ],
   controllers: [DoctorsController],
   providers: [DoctorsService],

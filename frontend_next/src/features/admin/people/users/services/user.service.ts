@@ -1,11 +1,10 @@
-
 import { api } from "@/shared/services/api";
-
 
 import type {
   CreateUserRequest,
   UpdateUserRequest,
   User,
+  UserStatus,
 } from "../types";
 
 export interface UserListResponse {
@@ -27,42 +26,28 @@ export const userService = {
     role?: string;
     status?: string;
   }) {
-    return api.get<UserListResponse>(
-      "/api/users",
-      {
-        params,
-      }
-    );
+    return api.get<UserListResponse>("/api/users", {
+      params,
+    });
   },
 
   getUserById(id: string) {
-    return api.get<User>(
-      `/api/users/${id}`
-    );
+    return api.get<User>(`/api/users/${id}`);
   },
 
-  createUser(
-    data: CreateUserRequest
-  ) {
-    return api.post<User>(
-      "/api/users",
-      data
-    );
+  createUser(data: CreateUserRequest) {
+    return api.post<User>("/api/users", data);
   },
 
-  updateUser(
-    id: string,
-    data: UpdateUserRequest
-  ) {
-    return api.patch<User>(
-      `/api/users/${id}`,
-      data
-    );
+  updateUser(id: string, data: UpdateUserRequest) {
+    return api.patch<User>(`/api/users/${id}`, data);
   },
 
   deleteUser(id: string) {
-    return api.delete(
-      `/api/users/${id}`
-    );
+    return api.delete(`/api/users/${id}`);
+  },
+
+  updateUserStatus(id: string, status: UserStatus) {
+    return api.patch<User>(`/api/users/${id}/status`, { status });
   },
 };

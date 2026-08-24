@@ -16,6 +16,7 @@ import { EmptyState } from "@/shared/components/common/empty-state";
 import { DataPagination } from "@/shared/components/common/data-pagination";
 import { useUsers } from "../hooks/use-users";
 import { User } from "../types";
+import { USER_ROLE } from "../constants/user-filters";
 
 interface UserTableProps {
   page: number;
@@ -39,29 +40,17 @@ export function UserTable({
   onPageChange,
   onPageSizeChange,
 }: UserTableProps) {
-  
-  const {
-    data,
-    isLoading,
-    isError
-  } = useUsers({
+  const { data, isLoading, isError } = useUsers({
     page,
     limit,
     search,
-    role:
-      role === "all"
-        ? undefined
-        : role,
-    status:
-      status === "all"
-        ? undefined
-        : status,
+    role: role === "all" ? undefined : role,
+    status: status === "all" ? undefined : status,
   });
 
   const users = data?.data ?? [];
   const pagination = data?.pagination;
-  console.log(users)
-
+  console.log(users);
 
   if (isLoading) {
     return (
@@ -71,7 +60,6 @@ export function UserTable({
     );
   }
 
-
   if (isError) {
     return (
       <div className="rounded-lg border bg-background p-6">
@@ -79,7 +67,7 @@ export function UserTable({
       </div>
     );
   }
-  
+
   return (
     <div className="rounded-lg border bg-background">
       <Table>
@@ -89,13 +77,13 @@ export function UserTable({
 
             <TableHead>Email</TableHead>
 
+            <TableHead>Phone</TableHead>
+
             <TableHead>Role</TableHead>
 
             <TableHead>Status</TableHead>
 
-            <TableHead className="w-24 text-right">
-              Actions
-            </TableHead>
+            <TableHead className="w-24 text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -115,13 +103,15 @@ export function UserTable({
                 <TableCell>{user.fullName}</TableCell>
 
                 <TableCell>{user.email}</TableCell>
-
-                <TableCell>{user.role}</TableCell>
+                <TableCell>{user.phone}</TableCell>
 
                 <TableCell>
-                  <UserStatusBadge
-                    status={user.status}
-                  />
+                  {USER_ROLE.find((option) => option.value === user.role)
+                    ?.label ?? user.role}
+                </TableCell>
+
+                <TableCell>
+                  <UserStatusBadge status={user.status} />
                 </TableCell>
 
                 <TableCell className="text-right">
@@ -133,15 +123,9 @@ export function UserTable({
         </TableBody>
       </Table>
       <DataPagination
-        currentPage={
-          pagination?.page ?? page
-        }
-        pageSize={
-          pagination?.limit ?? limit
-        }
-        totalItems={
-          pagination?.total ?? 0
-        }
+        currentPage={pagination?.page ?? page}
+        pageSize={pagination?.limit ?? limit}
+        totalItems={pagination?.total ?? 0}
         resourceName="users"
         onPageChange={onPageChange}
         onPageSizeChange={onPageSizeChange}

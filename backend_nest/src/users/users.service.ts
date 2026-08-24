@@ -59,6 +59,12 @@ export class UsersService {
             $options: 'i',
           },
         },
+        {
+          phone: {
+            $regex: search,
+            $options: 'i',
+          },
+        },
       ];
     }
 

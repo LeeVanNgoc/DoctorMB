@@ -1,14 +1,17 @@
 "use client";
 import { useState } from "react";
 
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 
 import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 
 import { CreateUserDialog } from "../dialogs/create-user-dialog";
 import { FilterSelect } from "@/shared/components/common/filter-select";
-import { USER_ROLE_OPTIONS, USER_STATUS_OPTIONS } from "../constants/user-filters";
+import {
+  USER_ROLE_OPTIONS,
+  USER_STATUS_OPTIONS,
+} from "../constants/user-filters";
 
 interface UserTableToolbarProps {
   search: string;
@@ -22,7 +25,6 @@ interface UserTableToolbarProps {
   onStatusChange: (value: string) => void;
 }
 
-
 export function UserTableToolbar({
   search,
   role,
@@ -31,9 +33,8 @@ export function UserTableToolbar({
   onRoleChange,
   onStatusChange,
 }: UserTableToolbarProps) {
-  const [openCreateDialog, setOpenCreateDialog] =
-    useState(false);
-  
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
+
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
       <div className="flex flex-1 items-center gap-3">
@@ -41,9 +42,7 @@ export function UserTableToolbar({
           <Search className="absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={search}
-            onChange={(e) =>
-              onSearchChange(e.target.value)
-            }
+            onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search users..."
             className="pl-9"
           />
@@ -62,7 +61,8 @@ export function UserTableToolbar({
       </div>
 
       <Button onClick={() => setOpenCreateDialog(true)}>
-        Create User
+        <Plus className="mr-2 size-4" />
+        Add User
       </Button>
 
       <CreateUserDialog

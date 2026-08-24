@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
   Body,
   Controller,
@@ -9,8 +7,8 @@ import {
   Patch,
   Post,
   Query,
-  Req,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
@@ -25,6 +23,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { QueryUserDto } from './dto/query-user.dto';
+
+import type { AuthenticatedRequest } from '../common/interfaces/authenticated-request.interface';
+import { UpdateUserStatusDto } from './dto/update-user-status.dto';
 
 @Controller('users')
 export class UsersController {
@@ -46,8 +47,8 @@ export class UsersController {
 
   @Get('me')
   @UseGuards(JwtAuthGuard)
-  getProfile(@Req() req: Request) {
-    return this.usersService.findById((req as any).user.userId);
+  getProfile(@Req() req: AuthenticatedRequest) {
+    return this.usersService.findById(req.user.userId);
   }
 
   @Get(':id')
@@ -67,13 +68,10 @@ export class UsersController {
   @Patch('change-password')
   @UseGuards(JwtAuthGuard)
   changePassword(
-    @Req() req: Request,
+    @Req() req: AuthenticatedRequest,
     @Body() changePasswordDto: ChangePasswordDto,
   ) {
-    return this.usersService.changePassword(
-      (req as any).user.userId,
-      changePasswordDto,
-    );
+    return this.usersService.changePassword(req.user.userId, changePasswordDto);
   }
 
   @Patch(':id')
@@ -81,5 +79,15 @@ export class UsersController {
   @Roles(Role.ADMIN)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @Patch(':id/status')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  updateStatus(
+    @Param('id') id: string,
+    @Body() updateUserStatusDto: UpdateUserStatusDto,
+  ) {
+    return this.usersService.updateStatus(id, updateUserStatusDto.status);
   }
 }

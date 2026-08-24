@@ -4,15 +4,15 @@ export class ChangePasswordDto {
   @IsString()
   @MinLength(6)
   @MaxLength(50)
-  currentPassword: string;
+  currentPassword!: string;
 
   @IsString()
   @MinLength(6)
   @MaxLength(50)
-  newPassword: string;
+  newPassword!: string;
 
   @IsString()
   @MinLength(6)
   @MaxLength(50)
-  confirmPassword: string;
+  confirmPassword!: string;
 }

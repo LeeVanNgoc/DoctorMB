@@ -75,7 +75,6 @@ export function CreateUserDialog({
       toast.error("Failed to add user.");
     }
   };
-
   const handleCancel = () => {
     resetForm();
     onOpenChange(false);
@@ -164,11 +163,10 @@ export function CreateUserDialog({
           </div>
         </div>
 
-        {/* Password */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Password</label>
+        <div className="flex items-center gap-3">
+          <label className="shrink-0 text-sm font-medium">Password:</label>
 
-          <div className="relative">
+          <div className="relative flex-1">
             <Input
               type={showPassword ? "text" : "password"}
               value={formData.password}
@@ -191,7 +189,6 @@ export function CreateUserDialog({
             </button>
           </div>
         </div>
-
         {/* Role + Status */}
         <div className="grid grid-cols-2 gap-6">
           <div className="flex items-center gap-3">

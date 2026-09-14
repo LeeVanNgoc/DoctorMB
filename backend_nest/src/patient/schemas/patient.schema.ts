@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type PatientDocument = HydratedDocument<Patient>;
 
@@ -53,13 +53,12 @@ export const EmergencyContactSchema =
 })
 export class Patient {
   @Prop({
-    type: String,
+    type: Types.ObjectId,
+    ref: 'User',
     required: true,
-    trim: true,
-    minlength: 2,
-    maxlength: 100,
+    unique: true,
   })
-  fullName!: string;
+  userId!: Types.ObjectId;
 
   @Prop({
     type: String,
@@ -73,23 +72,6 @@ export class Patient {
     required: true,
   })
   dateOfBirth!: Date;
-
-  @Prop({
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  })
-  phone!: string;
-
-  @Prop({
-    type: String,
-    unique: true,
-    sparse: true,
-    trim: true,
-    lowercase: true,
-  })
-  email?: string;
 
   @Prop({
     type: String,
@@ -129,4 +111,4 @@ export class Patient {
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
 
-PatientSchema.index({ fullName: 'text' });
+PatientSchema.index({ isActive: 1 });

@@ -1,51 +1,154 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { BadRequestException } from '@nestjs/common';
+import { InjectModel, InjectConnection } from '@nestjs/mongoose';
+import { Connection, Model, Types } from 'mongoose';
 
 import { CreatePatientDto } from './dto/create-patient';
 import { UpdatePatientDto } from './dto/update-patient';
+
 import { Patient, PatientDocument } from './schemas/patient.schema';
+
+import { User, UserDocument } from '../users/schemas/user.schema';
+
+import { Role } from '../common/enums/role.enum';
 
 @Injectable()
 export class PatientService {
   constructor(
     @InjectModel(Patient.name)
     private readonly patientModel: Model<PatientDocument>,
+
+    @InjectModel(User.name)
+    private readonly userModel: Model<UserDocument>,
+
+    @InjectConnection()
+    private readonly connection: Connection,
   ) {}
 
   async create(createPatientDto: CreatePatientDto): Promise<Patient> {
-    const { phone, email } = createPatientDto;
+    const session = await this.connection.startSession();
 
-    const phoneExists = await this.patientModel.exists({ phone });
+    session.startTransaction();
 
-    if (phoneExists) {
-      throw new ConflictException('Phone number already exists');
-    }
+    try {
+      const {
+        userId,
+        fullName,
+        email,
+        password,
+        phone,
+        gender,
+        dateOfBirth,
+        address,
+        bloodType,
+        allergies,
+        insuranceNumber,
+        emergencyContact,
+      } = createPatientDto;
 
-    if (email) {
-      const emailExists = await this.patientModel.exists({ email });
+      let targetUser: UserDocument;
 
-      if (emailExists) {
-        throw new ConflictException('Email already exists');
+      // ==========================================
+      // 1. Existing User
+      // ==========================================
+
+      if (userId) {
+        if (!Types.ObjectId.isValid(userId)) {
+          throw new BadRequestException('Invalid user ID');
+        }
+
+        const user = await this.userModel.findById(userId).session(session);
+        if (!user) {
+          throw new NotFoundException('User not found');
+        }
+
+        if (user.role !== Role.PATIENT) {
+          throw new BadRequestException('Selected user must have patient role');
+        }
+
+        const existingPatient = await this.patientModel
+          .exists({
+            userId: user._id,
+          })
+          .session(session);
+        if (existingPatient) {
+          throw new ConflictException(
+            'This user already has a patient profile',
+          );
+        }
+
+        targetUser = user;
       }
+
+      // ==========================================
+      // 2. Create New User
+      // ==========================================
+      else {
+        if (!fullName || !email || !password || !phone) {
+          throw new BadRequestException(
+            'Full name, email, password and phone are required when creating a new account',
+          );
+        }
+
+        const emailExists = await this.userModel.exists({
+          email,
+        });
+
+        if (emailExists) {
+          throw new ConflictException('Email already exists');
+        }
+
+        const phoneExists = await this.userModel.exists({
+          phone,
+        });
+
+        if (phoneExists) {
+          throw new ConflictException('Phone number already exists');
+        }
+
+        targetUser = new this.userModel({
+          fullName,
+          email,
+          password,
+          phone,
+          role: Role.PATIENT,
+        });
+
+        await targetUser.save({ session });
+      }
+
+      // ==========================================
+      // 3. Create Patient Profile
+      // ==========================================
+
+      const patient = new this.patientModel({
+        userId: targetUser._id,
+        gender,
+        dateOfBirth,
+        address,
+        bloodType,
+        allergies,
+        insuranceNumber,
+        emergencyContact,
+      });
+
+      await patient.save({ session });
+      await session.commitTransaction();
+
+      return patient;
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      await session.endSession();
     }
-
-    const patient = new this.patientModel(createPatientDto);
-
-    return patient.save();
   }
 
   async findAll(page = 1, limit = 10, search?: string) {
-    const filter: any = {
-      isActive: true,
-    };
-
     if (page < 1) {
       throw new BadRequestException('Page must be greater than 0');
     }
@@ -54,38 +157,68 @@ export class PatientService {
       throw new BadRequestException('Limit must be greater than 0');
     }
 
-    if (search) {
-      filter.$or = [
-        {
-          fullName: {
-            $regex: search,
-            $options: 'i',
-          },
-        },
-        {
-          phone: {
-            $regex: search,
-            $options: 'i',
-          },
-        },
-        {
-          email: {
-            $regex: search,
-            $options: 'i',
-          },
-        },
-      ];
-    }
+    const filter: Record<string, unknown> = {
+      isActive: true,
+    };
 
     const skip = (page - 1) * limit;
 
-    const [patients, total] = await Promise.all([
-      this.patientModel
+    let query = this.patientModel
+      .find(filter)
+      .populate({
+        path: 'userId',
+        select: 'fullName email phone avatar status role',
+      })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    if (search) {
+      const users = await this.userModel
+        .find({
+          role: Role.PATIENT,
+          $or: [
+            {
+              fullName: {
+                $regex: search,
+                $options: 'i',
+              },
+            },
+            {
+              email: {
+                $regex: search,
+                $options: 'i',
+              },
+            },
+            {
+              phone: {
+                $regex: search,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .select('_id');
+
+      const userIds = users.map((user) => user._id);
+
+      filter.userId = {
+        $in: userIds,
+      };
+
+      query = this.patientModel
         .find(filter)
+        .populate({
+          path: 'userId',
+          select: 'fullName email phone avatar status role',
+        })
         .sort({ createdAt: -1 })
         .skip(skip)
-        .limit(limit),
+        .limit(limit);
+    }
 
+    const [patients, total] = await Promise.all([
+      query,
       this.patientModel.countDocuments(filter),
     ]);
 
@@ -99,10 +232,17 @@ export class PatientService {
   }
 
   async findOne(id: string): Promise<PatientDocument> {
-    const patient = await this.patientModel.findById(id);
+    if (!Types.ObjectId.isValid(id)) {
+      throw new BadRequestException('Invalid patient ID');
+    }
+
+    const patient = await this.patientModel.findById(id).populate({
+      path: 'userId',
+      select: 'fullName email phone avatar status role',
+    });
 
     if (!patient) {
-      throw new NotFoundException('Patient not found');
+      throw new NotFoundException('Patient profile not found');
     }
 
     return patient;
@@ -114,30 +254,6 @@ export class PatientService {
   ): Promise<Patient> {
     await this.findOne(id);
 
-    const { phone, email } = updatePatientDto;
-
-    if (phone) {
-      const phoneExists = await this.patientModel.exists({
-        phone,
-        _id: { $ne: id },
-      });
-
-      if (phoneExists) {
-        throw new ConflictException('Phone number already exists');
-      }
-    }
-
-    if (email) {
-      const emailExists = await this.patientModel.exists({
-        email,
-        _id: { $ne: id },
-      });
-
-      if (emailExists) {
-        throw new ConflictException('Email already exists');
-      }
-    }
-
     const patient = await this.patientModel.findByIdAndUpdate(
       id,
       updatePatientDto,
@@ -148,7 +264,7 @@ export class PatientService {
     );
 
     if (!patient) {
-      throw new NotFoundException('Patient not found');
+      throw new NotFoundException('Patient profile not found');
     }
 
     return patient;
@@ -158,11 +274,13 @@ export class PatientService {
     const patient = await this.findOne(id);
 
     if (!patient.isActive) {
-      throw new BadRequestException('Patient has already been deleted.');
+      throw new BadRequestException(
+        'Patient profile has already been deleted.',
+      );
     }
 
     patient.isActive = false;
 
-    return await patient.save();
+    return patient.save();
   }
 }

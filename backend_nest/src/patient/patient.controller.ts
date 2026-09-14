@@ -9,6 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 
+import { Roles } from '../common/decorators/roles.decorator';
+import { Role } from '../common/enums/role.enum';
 import { CreatePatientDto } from './dto/create-patient';
 import { UpdatePatientDto } from './dto/update-patient';
 import { PatientService } from './patient.service';
@@ -18,16 +20,18 @@ export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Post()
+  @Roles(Role.ADMIN, Role.DOCTOR)
   async create(@Body() createPatientDto: CreatePatientDto) {
     const patient = await this.patientService.create(createPatientDto);
 
     return {
-      message: 'Patient created successfully',
+      message: 'Patient profile created successfully',
       patient,
     };
   }
 
   @Get()
+  @Roles(Role.ADMIN, Role.DOCTOR)
   async findAll(
     @Query('page') page = '1',
     @Query('limit') limit = '10',
@@ -37,6 +41,7 @@ export class PatientController {
   }
 
   @Get(':id')
+  @Roles(Role.ADMIN, Role.DOCTOR)
   async findOne(@Param('id') id: string) {
     const patient = await this.patientService.findOne(id);
 
@@ -46,6 +51,7 @@ export class PatientController {
   }
 
   @Patch(':id')
+  @Roles(Role.ADMIN, Role.DOCTOR)
   async update(
     @Param('id') id: string,
     @Body() updatePatientDto: UpdatePatientDto,
@@ -53,17 +59,18 @@ export class PatientController {
     const patient = await this.patientService.update(id, updatePatientDto);
 
     return {
-      message: 'Patient updated successfully',
+      message: 'Patient profile updated successfully',
       patient,
     };
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN, Role.DOCTOR)
   async remove(@Param('id') id: string) {
     await this.patientService.remove(id);
 
     return {
-      message: 'Patient deleted successfully',
+      message: 'Patient profile deleted successfully',
     };
   }
 }

@@ -3,61 +3,80 @@ import {
   IsDateString,
   IsEmail,
   IsEnum,
-  IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
   MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { BloodType, Gender } from '../schemas/patient.schema';
 
-class EmergencyContactDto {
+import { Gender, BloodType } from '../schemas/patient.schema';
+
+export class EmergencyContactDto {
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   @MaxLength(100)
-  name: string;
+  name!: string;
 
   @IsString()
-  @IsNotEmpty()
   @MinLength(2)
   @MaxLength(50)
-  relationship: string;
+  relationship!: string;
 
-  @Matches(/^(0|\+84)[3|5|7|8|9][0-9]{8}$/, {
-    message: 'Invalid Vietnamese phone number',
-  })
-  phone: string;
+  @IsString()
+  @MaxLength(20)
+  phone!: string;
 }
 
 export class CreatePatientDto {
+  // =========================
+  // Existing User
+  // =========================
+
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
+  userId?: string;
+
+  // =========================
+  // New User Account
+  // =========================
+
+  @IsOptional()
+  @IsString()
   @MinLength(2)
   @MaxLength(100)
-  fullName: string;
-
-  @IsEnum(Gender)
-  gender: Gender;
-
-  @IsDateString()
-  dateOfBirth: Date;
-
-  @Matches(/^(0|\+84)[3|5|7|8|9][0-9]{8}$/, {
-    message: 'Invalid Vietnamese phone number',
-  })
-  phone: string;
+  fullName?: string;
 
   @IsOptional()
   @IsEmail()
+  @MaxLength(255)
   email?: string;
 
   @IsOptional()
   @IsString()
-  @MaxLength(255)
+  @MinLength(6)
+  @MaxLength(50)
+  password?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(20)
+  phone?: string;
+
+  // =========================
+  // Patient Profile
+  // =========================
+
+  @IsEnum(Gender)
+  gender!: Gender;
+
+  @IsDateString()
+  dateOfBirth!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
   address?: string;
 
   @IsOptional()

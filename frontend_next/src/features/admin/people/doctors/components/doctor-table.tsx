@@ -23,13 +23,8 @@ interface DoctorTableProps {
 }
 
 export function DoctorTable({ filters, onFiltersChange }: DoctorTableProps) {
-  const {
-  doctors,
-  pagination,
-  isLoading,
-  error,
-  refetch,
-} = useAdminDoctors(filters);
+  const { doctors, pagination, isLoading, error, refetch } =
+    useAdminDoctors(filters);
 
   if (isLoading) {
     return (
@@ -42,6 +37,8 @@ export function DoctorTable({ filters, onFiltersChange }: DoctorTableProps) {
   if (error) {
     return <div className="rounded-lg border bg-background p-6">{error}</div>;
   }
+
+  console.log("doctors", doctors);
 
   return (
     <div className="rounded-lg border bg-background">
@@ -77,7 +74,7 @@ export function DoctorTable({ filters, onFiltersChange }: DoctorTableProps) {
           ) : (
             doctors.map((doctor) => (
               <TableRow key={doctor._id}>
-                <TableCell>{doctor.userId.fullName}</TableCell>
+                <TableCell>{doctor.userId?.fullName}</TableCell>
 
                 <TableCell>{doctor.userId.email}</TableCell>
 
@@ -95,9 +92,9 @@ export function DoctorTable({ filters, onFiltersChange }: DoctorTableProps) {
 
                 <TableCell className="text-right">
                   <DoctorRowActions
-  doctor={doctor}
-  onDoctorStatusChanged={refetch}
-/>
+                    doctor={doctor}
+                    onDoctorStatusChanged={refetch}
+                  />
                 </TableCell>
               </TableRow>
             ))

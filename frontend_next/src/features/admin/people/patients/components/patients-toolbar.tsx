@@ -16,53 +16,48 @@ import {
 
 import { CreatePatientDialog } from "../dialogs/create-patient-dialog";
 
-export function PatientToolbar() {
-  const [openCreateDialog, setOpenCreateDialog] =
-    useState(false);
+interface PatientToolbarProps {
+  search: string;
+  onSearchChange: (value: string) => void;
+}
 
-  const [gender, setGender] =
-    useState("all");
+export function PatientToolbar({
+  search,
+  onSearchChange,
+}: PatientToolbarProps) {
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
 
-  const [status, setStatus] =
-    useState("all");
+  const [gender, setGender] = useState("all");
+
+  const [status, setStatus] = useState("all");
 
   return (
     <>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-1 flex-col gap-4 sm:flex-row">
           <Input
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
             placeholder="Search patients..."
             className="sm:max-w-sm"
           />
 
           <FilterSelect
             value={gender}
-            onValueChange={(value) =>
-              setGender(value ?? "all")
-            }
-            options={
-              PATIENT_GENDER_OPTIONS
-            }
+            onValueChange={(value) => setGender(value ?? "all")}
+            options={PATIENT_GENDER_OPTIONS}
             className="w-full sm:w-44"
           />
 
           <FilterSelect
             value={status}
-            onValueChange={(value) =>
-              setStatus(value ?? "all")
-            }
-            options={
-              PATIENT_STATUS_OPTIONS
-            }
+            onValueChange={(value) => setStatus(value ?? "all")}
+            options={PATIENT_STATUS_OPTIONS}
             className="w-full sm:w-44"
           />
         </div>
 
-        <Button
-          onClick={() =>
-            setOpenCreateDialog(true)
-          }
-        >
+        <Button onClick={() => setOpenCreateDialog(true)}>
           <Plus className="mr-2 size-4" />
           Add Patient
         </Button>
@@ -70,9 +65,7 @@ export function PatientToolbar() {
 
       <CreatePatientDialog
         open={openCreateDialog}
-        onOpenChange={
-          setOpenCreateDialog
-        }
+        onOpenChange={setOpenCreateDialog}
       />
     </>
   );

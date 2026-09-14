@@ -1,21 +1,74 @@
-export type PatientStatus =
-  | "active"
-  | "inactive";
+export type PatientStatus = "active" | "inactive";
+
+export type PatientGender = "Male" | "Female" | "Other";
+
+export type BloodType = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+
+export interface EmergencyContact {
+  name: string;
+  relationship: string;
+  phone: string;
+}
+
+export interface PatientUser {
+  _id: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  avatar?: string;
+  status: PatientStatus;
+  role: "patient";
+}
 
 export interface Patient {
-  id: string;
+  _id: string;
 
-  patientCode: string;
+  userId: PatientUser;
 
-  fullName: string;
-
-  email: string;
-
-  phone: string;
-
-  gender: "male" | "female";
-
+  gender: PatientGender;
   dateOfBirth: string;
 
-  status: PatientStatus;
+  address?: string;
+
+  bloodType?: BloodType;
+
+  allergies: string[];
+
+  insuranceNumber?: string;
+
+  emergencyContact?: EmergencyContact;
+
+  isActive: boolean;
+
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreatePatientRequest {
+  userId?: string;
+
+  fullName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+
+  gender: PatientGender;
+  dateOfBirth: string;
+
+  address?: string;
+  bloodType?: BloodType;
+  allergies?: string[];
+  insuranceNumber?: string;
+  emergencyContact?: EmergencyContact;
+}
+
+export interface UpdatePatientRequest {
+  gender?: PatientGender;
+  dateOfBirth?: string;
+  address?: string;
+  bloodType?: BloodType;
+  allergies?: string[];
+  insuranceNumber?: string;
+  emergencyContact?: EmergencyContact;
+  isActive?: boolean;
 }
